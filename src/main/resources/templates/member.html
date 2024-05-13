@@ -76,6 +76,12 @@
         width: 20px;
         border: 1px solid;
     }
+    .page{
+        text-align: center;
+    }
+    .edit{
+        margin-top: 20px;
+    }
     .edit button{
         float: right;
     }
@@ -99,7 +105,7 @@
     <ul>
         <li><a href="member.html">사용자 관리</a>
             <ul>
-                <li><a href="member.html">- 회원</a></li>
+                <li style="font-weight : bold;" ><a href="member.html">- 회원</a></li>
                 <li><a href="manager.html">- 관리자</a></li>
             </ul>
         </li>
@@ -114,13 +120,13 @@
         <li><a href="#">커뮤니티 관리</a></li>
     </ul>
     <ul>
-        <li><a href="#">입양상식 관리</a></li>
+        <li><a href="faq_admin.html">입양상식 관리</a></li>
     </ul>
     <ul>
-        <li><a href="#">배너 관리</a></li>
+        <li><a href="banner_admin.html">배너 관리</a></li>
     </ul>
     <ul>
-        <li><a href="#">문의 관리</a></li>
+        <li><a href="question_admin.html">문의 관리</a></li>
     </ul>
 </div>
 <div id="main" class="main">
@@ -240,12 +246,26 @@
                     <th></th>
                     <th></th>
                 </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </tbody>
         </table>
     </div>
-    <div id="edit">
+    <div class="edit">
         <button type="submit" class="btn">수정</button>
         <button type="submit" class="btn">삭제</button>
+    </div>
+    <div class="page">
+        <span><<</span> <span><</span>
+        <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>></span> <span>>></span>
     </div>
 </div>
 <script>
