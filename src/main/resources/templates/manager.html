@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
+    .logo a{
+        text-decoration-line: none;
+    }
+    .logo a:link{
+        color: black;
+    }
+    .logo a:link{
+        color: black;
+    }
+    .logo a:visited{
+        color: black;
+    }
+    .logoImg{
+        margin-left: 50px;
+        vertical-align: middle;
+    }
+    .logoText{
+        font-family: "DM Serif Display", serif;
+        font-weight: 400;
+        font-style: italic;
+    }
     .menu{
         float: left;
         margin: 30px;
@@ -56,10 +77,16 @@
 <head>
     <meta charset="UTF-8">
     <title>US2 관리자 사이트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family=Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div>
-    <span style="font-size:30px;margin-top:20px;"> US2</span>
+<div id="logo" class="logo">
+    <a href="member.html">
+        <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">
+        <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
+    </a>
 </div>
 <div id="menu" class="menu">
     <ul>
@@ -87,6 +114,9 @@
     </ul>
     <ul>
         <li><a href="question_admin.html">문의 관리</a></li>
+    </ul>
+    <ul>
+        <li><a href="#">문의 관리</a></li>
     </ul>
 </div>
 <div id="main" class="main">
