@@ -39,22 +39,4 @@ public class FAQ {
         this.delete_date = delete_date;
         this.member_id = member_id;
     }
-/*    public Integer getId(){
-        return id;
-    }
-    public String getTitle(){
-        return title;
-    }
-    public String getContent(){
-        return content;
-    }
-    public String getAddDate(){
-        return addDate;
-    }
-    public String getDeleteDate(){
-        return deleteDate;
-    }
-    public Integer getMemberId(){
-        return Memberid;
-    }*/
 }
