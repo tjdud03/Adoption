@@ -1,8 +1,19 @@
 package com.example.PetProject.controller;
 
+import ch.qos.logback.core.model.Model;
+import com.example.PetProject.domain.MemberDTO;
+import com.example.PetProject.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
 @RestController
 public class AdminController {
 
@@ -31,4 +42,5 @@ public class AdminController {
         return "sponsor";
     }
 
+    private MemberService memberService;
 }

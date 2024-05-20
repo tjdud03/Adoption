@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <!--member_admin-->
 <style>
     .logo a{
@@ -89,7 +89,7 @@
 <body>
 <div id="logo" class="logo">
     <a href="index.html">
-        <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">
+        <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
 </div>
@@ -97,7 +97,7 @@
     <ul>
         <li><a href="/index.html">사용자 관리</a>
               <ul>
-                <li><a href="index.html">- 회원</a></li>
+                <li style="font-weight: bold;"><a href="index.html">- 회원</a></li>
                 <li><a href="manager.html"> - 관리자</a></li>
             </ul>
         </li>
@@ -157,6 +157,17 @@
                 </tr>
             </thead>
             <tbody>
+            <tr th:each="member : ${member}">
+                <td th:text="${member.member_id}"></td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.pw}"</td>
+                <td th:text="${member.phone}"</td>
+                <td th:text="${member.birth}"</td>
+                <td th:text="${member.email}"</td>
+                <td th:text="${member.add_date}"</td>
+                <td th:text="${member.change_date}"</td>
+                <td th:text="${member.mem_type}"</td>
+            </tr>
             </tbody>
         </table>
     </div>
