@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
-        text-decoration-line: none;
+    text-decoration-line: none;
     }
     .logo a:link{
         color: black;
@@ -83,14 +83,14 @@
 </head>
 <body>
 <div id="logo" class="logo">
-    <a href="index.html">
+    <a href="/index">
         <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="index.html">사용자 관리</a></li>
+        <li><a href="/index">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -156,6 +156,13 @@
             <tbody>
             </tbody>
         </table>
+    </div>
+    <button type="submit" class="btn_d btnS">삭제</button>
+    <button type="submit" class="btn_c btnS">등록</button>
+    <div class="page">
+        <span><<</span> <span><</span>
+        <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>></span> <span>>></span>
     </div>
 </div>
 <script>

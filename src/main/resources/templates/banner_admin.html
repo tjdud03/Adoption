@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
-        text-decoration-line: none;
+    text-decoration-line: none;
     }
     .logo a:link{
         color: black;
@@ -83,12 +83,15 @@
     =Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div>
-    <span style="font-size:30px;margin-top:20px;"> US2</span>
+<div id="logo" class="logo">
+    <a href="/index">
+        <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
+        <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
+    </a>
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="index.html">사용자 관리</a></li>
+        <li><a href="/index">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -100,7 +103,7 @@
         <li><a href="/Bulletin">커뮤니티 관리</a></li>
     </ul>
     <ul>
-        <li><a href="/faq">입양상식 관리</a></li>
+        <li><a href="/faq">입양상식</a></li>
     </ul>
     <ul>
         <li><a href="/banner">배너 관리</a></li>
