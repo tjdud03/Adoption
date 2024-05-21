@@ -1,9 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<style>
+    .logo a{
+        text-decoration-line: none;
+    }
+    .logo a:link{
+        color: black;
+    }
+    .logo a:link{
+        color: black;
+    }
+    .logo a:visited{
+        color: black;
+    }
+    .logoImg{
+        margin-left: 50px;
+        vertical-align: middle;
+    }
+    .logoText{
+        font-family: "DM Serif Display", serif;
+        font-weight: 400;
+        font-style: italic;
+    }
+    .menu{
+        float: left;
+        margin: 30px;
+        box-sizing: border-box;
+        background-color: #D7EFE7;
+    }
+    .menu ul{
+        list-style-type: none;
+    }
+    .menu li{
+
+    }
+    .menu a{
+        text-decoration: none;
+        font-size: 20px;
+        color: #363636;
+        display: block;
+        margin-left: -20px;
+    }
+    .search{
+        width: 1000px;
+        height: 30px;
+        padding: 4px;
+        margin-bottom: 20px;
+        border: 1px solid black;
+        text-align: center;
+    }
+    .item{
+        margin: 3px;
+        display: inline-block;
+    }
+    .text{
+        display: inline-block;
+    }
+    .btnS{
+        border: 1px solid black;
+        background-color: #D7EFE7;
+    }
+    .list, th{
+        width: 2000px;
+        word-break: break-all;
+        border-collapse: 1px;
+    }
+    .table{
+        border: 1px solid black;
+        width: 50%
+    }
+    .table th{
+        border: 1px solid;
+    }
+    .table td{
+        width: 20px;
+        border: 1px solid;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>US2 관리자 사이트</title>
-    <link rel="stylesheet" href="css/index_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family=Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
@@ -17,10 +93,10 @@
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="/index.html">사용자 관리</a>
+        <li><a href="/index">사용자 관리</a>
               <ul>
                 <li style="font-weight: bold;"><a href="index.html">- 회원</a></li>
-                <li><a href="manager.html"> - 관리자</a></li>
+                <li><a href="/manager"> - 관리자</a></li>
             </ul>
         </li>
     </ul>
