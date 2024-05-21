@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <style>
     .logo a{
         text-decoration-line: none;
@@ -93,12 +93,12 @@
         <li><a href="index.html">사용자 관리</a>
             <ul>
                 <li><a href="index.html">- 회원</a></li>
-                <li><a href="/manager">- 관리자</a></li>
+                <li style="font-weight : bold;"><a href="./manager.html">- 관리자</a></li>
             </ul>
         </li>
     </ul>
     <ul>
-        <li><a href="/sponsor">후원 관리</a></li>
+        <li><a href="sponsor.html">후원 관리</a></li>
     </ul>
     <ul>
         <li><a href="#">게시글 관리</a></li>
@@ -107,13 +107,13 @@
         <li><a href="#">커뮤니티 관리</a></li>
     </ul>
     <ul>
-        <li><a href="/faq">입양상식</a></li>
+        <li><a href="faq_admin.html">입양상식</a></li>
     </ul>
     <ul>
-        <li><a href="/banner">배너 관리</a></li>
+        <li><a href="banner_admin.html">배너 관리</a></li>
     </ul>
     <ul>
-        <li><a href="/question">문의 관리</a></li>
+        <li><a href="question_admin.html">문의 관리</a></li>
     </ul>
 </div>
 <div id="main" class="main">
@@ -153,6 +153,13 @@
             <tbody>
             </tbody>
         </table>
+    </div>
+    <button type="submit" class="btn_d btnS">삭제</button>
+    <button type="submit" class="btn_c btnS">등록</button>
+    <div class="page">
+        <span><<</span> <span><</span>
+        <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>></span> <span>>></span>
     </div>
 </div>
 <script>
