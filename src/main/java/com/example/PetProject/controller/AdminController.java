@@ -58,6 +58,26 @@ public class AdminController {
         return "Lsponsor";
     }
 
+    @GetMapping("/Bulletin")
+    public String Bulletinpage(Model model){
+        return "Bulletin";
+    }
+
+    @GetMapping("/adoptionwriting")
+    public String adoptionwritingpage(Model model){
+        return "adoptionwriting";
+    }
+
+    @GetMapping("/review")
+    public String reviewpage(Model model){
+        return "review";
+    }
+
+    @GetMapping("/boast")
+    public String boastpage(Model model){
+        return "boast";
+    }
+
 
    /* @RequestMapping(value = "/sponsor", method = RequestMethod.GET)*/
    @GetMapping("/sponsor")

@@ -28,12 +28,6 @@
         box-sizing: border-box;
         background-color: #D7EFE7;
     }
-    .menu{
-        float: left;
-        margin: 30px;
-        box-sizing: border-box;
-        background-color: #D7EFE7;
-    }
     .menu ul{
         list-style-type: none;
     }
@@ -79,20 +73,8 @@
         width: 20px;
         border: 1px solid;
     }
-    .page{
-        text-align: center;
-        margin-top: 30px;
-    }
-    .btn_c{
-        border: 1px solid black;
-        background-color: #D7EFE7;
-        float: right;
-        margin-top: 20px;
-    }
-    .btn_d{
-        border: 1px solid black;
-        background-color: #D7EFE7;
-        margin-top: 20px;
+    .font_bold{
+        font-weight: bold;
     }
 </style>
 <head>
@@ -100,12 +82,14 @@
     <title>US2 관리자 사이트</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family
-    =Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family=Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div>
-    <span style="font-size:30px;margin-top:20px;"> US2</span>
+<div id="logo" class="logo">
+    <a href="index.html">
+        <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">
+        <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
+    </a>
 </div>
 <div id="menu" class="menu">
     <ul>
@@ -118,7 +102,14 @@
         <li><a href="/adoptionwriting">게시글 관리</a></li>
     </ul>
     <ul>
-        <li><a href="/Bulletin">커뮤니티 관리</a></li>
+        <li class="title">
+            <div class="font_bold"><a href="/Bulletin">커뮤니티 관리</a></div>
+            <ul class="sub">
+                <li><a href="/Bulletin">- Q&A</a></li>
+                <li><a href="/review">- 분양후기</a></li>
+                <li class="font_bold"><a href="/boast">- 자랑글</a></li>
+            </ul>
+        </li>
     </ul>
     <ul>
         <li><a href="/faq">입양상식</a></li>
@@ -131,16 +122,14 @@
     </ul>
 </div>
 <div id="main" class="main">
-    <p style="margin-top: 28px;">관리자 관리</p>
+    <p style="margin-top: 28px;">자랑글 관리</p>
     <div id="search" class="search">
         <div id="item" class="item">
             <form action="#">
                 <select>
                     <option value="all">전체</option>
-                    <option value="id">아이디</option>
-                    <option value="name">내용</option>
-                    <option value="phone">등록 날짜</option>
-                    <option value="email">수정 날짜</option>
+                    <option value="name">신고</option>
+                    <option value="email">삭제</option>
                 </select>
             </form>
         </div>
@@ -153,37 +142,22 @@
     </div>
     <div id="table" class="list">
         <table class="table">
-            <caption style="font-size: 20px; margin-bottom: 10px;">문의 목록</caption>
+            <caption style="font-size: 20px; margin-bottom: 10px;">자랑글 관리</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <th>Select</th> <!-- 체크박스 -->
-                <th>ID</th>
-                <th>Member Id</th>
-                <th>Content</th>
-                <th>Add Date</th>
-                <th>Change Date</th>
+                <td><input type="checkbox"></td>
+                <th>No.</th>
+                <th>상태</th>
+                <th>제목</th>
+                <th>등록자</th>
+                <th>등록일</th>
+                <th>노출일</th>
+                <th>조회</th>
             </tr>
             </thead>
             <tbody>
-            <!-- question_list 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
-            <tr th:each="question : ${question_list}">
-                <td><input type="checkbox" th:value="${question.q_id}" name="qIds" /></td> <!-- 체크박스 -->
-                <td th:text="${question.q_id}"></td>
-                <td th:text="${question.member_id}"></td>
-                <td th:text="${question.content}"></td>
-                <td th:text="${question.add_date}"></td>
-                <td th:text="${question.change_date}"></td>
-            </tr>
             </tbody>
         </table>
-
-    </div>
-    <button type="submit" class="btn_d btnS">삭제</button>
-    <button type="submit" class="btn_c btnS">등록</button>
-    <div class="page">
-        <span><<</span> <span><</span>
-        <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
-        <span>></span> <span>>></span>
     </div>
 </div>
 <script>
