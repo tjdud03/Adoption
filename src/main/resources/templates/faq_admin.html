@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
         text-decoration-line: none;
@@ -115,7 +115,7 @@
         <li><a href="index.html">사용자 관리</a></li>
     </ul>
     <ul>
-        <li><a href="sponsor.html">후원 관리</a></li>
+        <li><a href="/sponsor">후원 관리</a></li>
     </ul>
     <ul>
         <li><a href="#">게시글 관리</a></li>
@@ -124,13 +124,13 @@
         <li><a href="#">커뮤니티 관리</a></li>
     </ul>
     <ul style="font-weight : bold;">
-        <li><a href="faq_admin.html">입양상식 관리</a></li>
+        <li><a href="/faq">입양상식 관리</a></li>
     </ul>
     <ul>
-        <li><a href="banner_admin.html">배너 관리</a></li>
+        <li><a href="/banner">배너 관리</a></li>
     </ul>
     <ul>
-        <li><a href="question_admin.html">문의 관리</a></li>
+        <li><a href="/question">문의 관리</a></li>
     </ul>
 </div>
 <div id="main" class="main">
@@ -159,68 +159,29 @@
             <caption style="font-size: 20px; margin-bottom: 10px;">입양상식 목록</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <td><input type="checkbox"></td>
-                <th>No.</th>
-                <th>상태</th>
-                <th>제목</th>
-                <th>등록자</th>
-                <th>등록일</th>
-                <th>조회</th>
+                <th>Select</th> <!-- 체크박스 -->
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Add Date</th>
+                <th>Delete Date</th>
+                <th>Member ID</th>
             </tr>
             </thead>
             <tbody>
-            <!-- 1 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 2 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 3 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 4 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 5 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 6 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 7 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 8 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 9 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
-            <!-- 10 -->
-            <tr>
-                <td><input type="checkbox"></td>
-                <th></th><th></th><th></th><th></th><th></th><th></th>
+            <!-- faq_list를 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
+            <tr th:each="faq : ${faq_list}">
+                <td><input type="checkbox" th:value="${faq.faq_id}" name="faqIds" /></td> <!-- 체크박스 -->
+                <td th:text="${faq.faq_id}"></td>
+                <td th:text="${faq.title}"></td>
+                <td th:text="${faq.content}"></td>
+                <td th:text="${faq.add_date}"></td>
+                <td th:text="${faq.delete_date}"></td>
+                <td th:text="${faq.member_id}"></td>
             </tr>
             </tbody>
         </table>
+
     </div>
     <button type="submit" class="btn_d btnS">삭제</button>
     <button type="submit" class="btn_c btnS">등록</button>

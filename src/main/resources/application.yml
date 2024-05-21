@@ -1,4 +1,10 @@
 spring:
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .ftl
+  thymeleaf:
+    enabled: true
   jpa:
     hibernate:
       ddl-auto: none

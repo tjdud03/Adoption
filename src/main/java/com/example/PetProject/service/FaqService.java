@@ -15,7 +15,7 @@ public class FaqService {
     private final FaqRepository faqRepository;
 
     @Transactional
-    public List<FAQ> save() {
+    public List<FAQ> getList() {
         return faqRepository.findAll();
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
         text-decoration-line: none;
@@ -82,6 +82,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family=Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<h1>ArrayList Items</h1>
+<ul>
+    <!--ArrayList를 순회하며 항목을 표시-->
+    <li th:each="item : ${myList}" th:text="${item}"></li>
+</ul>
+
 <div id="logo" class="logo">
     <a href="index.html">
         <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">

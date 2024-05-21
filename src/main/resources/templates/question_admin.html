@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
         text-decoration-line: none;
@@ -21,6 +21,12 @@
         font-family: "DM Serif Display", serif;
         font-weight: 400;
         font-style: italic;
+    }
+    .menu{
+        float: left;
+        margin: 30px;
+        box-sizing: border-box;
+        background-color: #D7EFE7;
     }
     .menu{
         float: left;
@@ -73,6 +79,21 @@
         width: 20px;
         border: 1px solid;
     }
+    .page{
+        text-align: center;
+        margin-top: 30px;
+    }
+    .btn_c{
+        border: 1px solid black;
+        background-color: #D7EFE7;
+        float: right;
+        margin-top: 20px;
+    }
+    .btn_d{
+        border: 1px solid black;
+        background-color: #D7EFE7;
+        margin-top: 20px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -91,7 +112,7 @@
         <li><a href="index.html">사용자 관리</a></li>
     </ul>
     <ul>
-        <li><a href="sponsor.html">후원 관리</a></li>
+        <li><a href="/sponsor">후원 관리</a></li>
     </ul>
     <ul>
         <li><a href="#">게시글 관리</a></li>
@@ -100,13 +121,13 @@
         <li><a href="#">커뮤니티 관리</a></li>
     </ul>
     <ul>
-        <li><a href="faq_admin.html">입양상식</a></li>
+        <li><a href="/faq">입양상식</a></li>
     </ul>
     <ul>
-        <li><a href="banner_admin.html">배너 관리</a></li>
+        <li><a href="/banner">배너 관리</a></li>
     </ul>
     <ul>
-        <li><a href="question_admin.html">문의 관리</a></li>
+        <li><a href="/question">문의 관리</a></li>
     </ul>
 </div>
 <div id="main" class="main">
@@ -117,9 +138,9 @@
                 <select>
                     <option value="all">전체</option>
                     <option value="id">아이디</option>
-                    <option value="name">이름</option>
-                    <option value="phone">전화번호</option>
-                    <option value="email">이메일</option>
+                    <option value="name">내용</option>
+                    <option value="phone">등록 날짜</option>
+                    <option value="email">수정 날짜</option>
                 </select>
             </form>
         </div>
@@ -135,17 +156,35 @@
             <caption style="font-size: 20px; margin-bottom: 10px;">문의 목록</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <td><input type="checkbox"></td>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>비밀번호</th>
-                <th>전화번호</th>
-                <th>이메일</th>
+                <th>Select</th> <!-- 체크박스 -->
+                <th>ID</th>
+                <th>Member Id</th>
+                <th>Content</th>
+                <th>Add Date</th>
+                <th>Change Date</th>
             </tr>
             </thead>
             <tbody>
+            <!-- question_list 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
+            <tr th:each="question : ${question_list}">
+                <td><input type="checkbox" th:value="${question.q_id}" name="qIds" /></td> <!-- 체크박스 -->
+                <td th:text="${question.q_id}"></td>
+                <td th:text="${question.member_id}"></td>
+                <td th:text="${question.content}"></td>
+                <td th:text="${question.add_date}"></td>
+                <td th:text="${question.change_date}"></td>
+
+            </tr>
             </tbody>
         </table>
+
+    </div>
+    <button type="submit" class="btn_d btnS">삭제</button>
+    <button type="submit" class="btn_c btnS">등록</button>
+    <div class="page">
+        <span><<</span> <span><</span>
+        <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>></span> <span>>></span>
     </div>
 </div>
 <script>
