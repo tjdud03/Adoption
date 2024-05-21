@@ -38,6 +38,11 @@ public class AdminController {
         return "question_admin";
     }
 
+    @GetMapping("/index")
+    public String indexpage(){
+        return "redirect:/index.html";
+    }
+
     @GetMapping("/banner")
     public String bannerpage(Model model){
         return "banner_admin";
