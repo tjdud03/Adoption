@@ -1,6 +1,7 @@
 package com.example.PetProject.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,8 +21,9 @@ public class Breed {
     @Column(name = "content", length = 255)
     private String content;
 
-        @Column(name = "img", length = 255)
+    @Column(name = "img")
     private String img;
+    /*private byte[] img;*/
 
     @Column(name = "breed", length = 255)
     private String breed;
@@ -37,4 +39,17 @@ public class Breed {
 
     @Column(name = "state", length = 20)
     private String state;
+
+    @Builder
+    public Breed(Integer breed_id, String title, String content, String img,
+                 String breed, String add_date, String change_date, String member_id, String state){
+        this.breed_id = breed_id;
+        this.title = title;
+        this.content = content;
+        this.img = img;
+        this.breed = breed;
+        this.add_date = add_date;
+        this.change_date = change_date;
+        this.state = state;
+    }
 }

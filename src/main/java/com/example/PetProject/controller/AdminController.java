@@ -1,7 +1,9 @@
 package com.example.PetProject.controller;
 
+import com.example.PetProject.domain.Breed;
 import com.example.PetProject.domain.FAQ;
 import com.example.PetProject.domain.Question;
+import com.example.PetProject.service.BreedService;
 import com.example.PetProject.service.FaqService;
 import com.example.PetProject.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,15 @@ import java.util.List;
 public class AdminController {
     private final FaqService faqService;
     private final QuestionService questionService;
+    private final BreedService breedService;
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService) {
+    public AdminController(FaqService faqService, QuestionService questionService
+    , BreedService breedService) {
         this.faqService = faqService;
         this.questionService = questionService;
+        this.breedService = breedService;
     }
 
     @GetMapping("/faq")
@@ -36,6 +41,13 @@ public class AdminController {
         List<Question> question_list = questionService.getList();
         model.addAttribute("question_list", question_list);
         return "question_admin";
+    }
+
+    @GetMapping("/breed")
+    public String breedpage(Model model){
+        List<Breed> breed_list = breedService.getList();
+        model.addAttribute("breed_list", breed_list);
+        return  "breed";
     }
 
     @GetMapping("/index")
@@ -64,13 +76,8 @@ public class AdminController {
     }
 
     @GetMapping("/community")
-    public String Bulletinpage(Model model){
+    public String communitypage(Model model){
         return "community";
-    }
-
-    @GetMapping("/breed")
-    public String adoptionwritingpage(Model model){
-        return "breed";
     }
 
     @GetMapping("/review")
