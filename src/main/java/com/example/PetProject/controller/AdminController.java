@@ -63,14 +63,14 @@ public class AdminController {
         return "Lsponsor";
     }
 
-    @GetMapping("/Bulletin")
+    @GetMapping("/community")
     public String Bulletinpage(Model model){
-        return "Bulletin";
+        return "community";
     }
 
-    @GetMapping("/adoptionwriting")
+    @GetMapping("/breed")
     public String adoptionwritingpage(Model model){
-        return "adoptionwriting";
+        return "breed";
     }
 
     @GetMapping("/review")
