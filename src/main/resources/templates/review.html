@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
-    text-decoration-line: none;
+        text-decoration-line: none;
     }
     .logo a:link{
         color: black;
@@ -73,25 +73,28 @@
         width: 20px;
         border: 1px solid;
     }
+    .font_bold{
+        font-weight: bold;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
-    <title>US2 관리자 사이트</title>
+    <title>US2 관리자 사이트 게시글</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family
-    =Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family=Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div id="logo" class="logo">
-    <a href="/member">
-        <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
+    <a href="/index">
+        <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="/member">사용자 관리</a></li>
+        <li><a href="/index">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -100,7 +103,14 @@
         <li><a href="/breed">게시글 관리</a></li>
     </ul>
     <ul>
-        <li><a href="/community">커뮤니티 관리</a></li>
+        <li class="title">
+            <div class="font_bold"><a href="/community">커뮤니티 관리</a></div>
+            <ul class="sub">
+                <li><a href="/community">- Q&A</a></li>
+                <li class="font_bold"><a href="/review">- 분양후기</a></li>
+                <li><a href="/boast">- 자랑글</a></li>
+            </ul>
+        </li>
     </ul>
     <ul>
         <li><a href="/faq">입양상식</a></li>
@@ -113,16 +123,14 @@
     </ul>
 </div>
 <div id="main" class="main">
-    <p style="margin-top: 28px;">관리자 관리</p>
+    <p style="margin-top: 28px;">분양후기 관리</p>
     <div id="search" class="search">
         <div id="item" class="item">
             <form action="#">
                 <select>
                     <option value="all">전체</option>
-                    <option value="id">아이디</option>
-                    <option value="name">이름</option>
-                    <option value="phone">전화번호</option>
-                    <option value="email">이메일</option>
+                    <option value="name">신고</option>
+                    <option value="email">삭제</option>
                 </select>
             </form>
         </div>
@@ -135,29 +143,20 @@
     </div>
     <div id="table" class="list">
         <table class="table">
-            <caption style="font-size: 20px; margin-bottom: 10px;">입양상식 목록</caption>
+            <caption style="font-size: 20px; margin-bottom: 10px;">분양후기 관리</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <th>선택</th> <!-- 체크박스 -->
-                <th>ID</th>
+                <td><input type="checkbox"></td>
+                <th>No.</th>
                 <th>상태</th>
                 <th>제목</th>
-                <th>이미지</th>
+                <th>등록자</th>
                 <th>등록일</th>
-                <th>회원 ID</th>
+                <th>노출일</th>
+                <th>조회</th>
             </tr>
             </thead>
             <tbody>
-            <!-- faq_list를 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
-            <tr th:each="banner : ${banner_list}">
-                <td><input type="checkbox" th:value="${banner.banner_id}" name="bannerIds" /></td> <!-- 체크박스 -->
-                <td th:text="${banner.banner_id}"></td>
-                <td th:text="${banner.state}"></td>
-                <td th:text="${banner.title}"></td>
-                <td th:text="${banner.img}"></td>
-                <td th:text="${banner.add_date}"></td>
-                <td th:text="${banner.member_id}"></td>
-            </tr>
             </tbody>
         </table>
     </div>
