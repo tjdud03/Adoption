@@ -164,12 +164,12 @@
                 <td th:text="${breed.member_id}"></td>
                 <td th:text="${breed.state}"></td>
             </tr>
-            </tbody>
+             </tbody>
         </table>
-    </div>
 </div>
-<button type="submit" class="btn_d btnS">삭제</button>
-<button type="submit" class="btn_c btnS">등록</button>
+    <button type="submit" class="btn_d btnS" name="btn_d btnS" onclick="delete()">삭제</button>
+    <button type="submit" class="btn_c btnS">등록</button>
+</div>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
       openNav();
@@ -184,6 +184,8 @@
       document.getElementById("menu").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
     }
+
+
 </script>
 </body>
 </html>
