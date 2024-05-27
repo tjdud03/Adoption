@@ -1,10 +1,12 @@
 package com.example.PetProject.controller;
 
 import com.example.PetProject.domain.Banner;
+import com.example.PetProject.domain.Breed;
 import com.example.PetProject.domain.FAQ;
 import com.example.PetProject.domain.Question;
 import com.example.PetProject.repository.FaqRepository;
 import com.example.PetProject.service.BannerService;
+import com.example.PetProject.service.BreedService;
 import com.example.PetProject.service.FaqService;
 import com.example.PetProject.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -23,14 +24,16 @@ public class AdminController {
     private final QuestionService questionService;
     private final BannerService bannerService;
     private final FaqRepository faqRepository;
+    private final BreedService breedService;
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, FaqRepository faqRepository) {
+    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, FaqRepository faqRepository, BreedService breedService) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
         this.faqRepository = faqRepository;
+        this.breedService = breedService;
     }
 
     @GetMapping("/faq")
@@ -80,8 +83,23 @@ public class AdminController {
     }
 
     @GetMapping("/sponsor")
-    public String sponsor(Model model) {
+    public String sponsor() {
         return "sponsor";
+    }
+
+    @GetMapping("/community")
+    public String communitypage(){
+        return "community";
+    }
+
+    @GetMapping("/review")
+    public String reviewpage(){
+        return "review";
+    }
+
+    @GetMapping("/boast")
+    public String boastpage(){
+        return "boast";
     }
 
     @ResponseBody
@@ -91,11 +109,11 @@ public class AdminController {
     }
 
 
-    @RequestMapping(value = {"/faq_detail"}, method = { RequestMethod.GET })
+    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
     public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
         //System.out.println(faqId);
-
-        Optional<FAQ> faqOptional = faqRepository.findById(faqId);
+        //faqService.detailFAQs();
+        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
         //System.out.println(faqOptional);
         return "faq_detail";
     }
