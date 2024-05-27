@@ -24,16 +24,11 @@
     }
     .menu{
         float: left;
-        margin: 30px;
+        margin: 10px;
         box-sizing: border-box;
         background-color: #D7EFE7;
     }
-    .menu{
-        float: left;
-        margin: 30px;
-        box-sizing: border-box;
-        background-color: #D7EFE7;
-    }
+
     .menu ul{
         list-style-type: none;
     }
@@ -51,6 +46,7 @@
         margin-bottom: 20px;
         border: 1px solid black;
         text-align: center;
+        margin-left: 200px;
     }
     .item{
         margin: 3px;
@@ -62,6 +58,7 @@
     .btnS{
         border: 1px solid black;
         background-color: #D7EFE7;
+        cursor: pointer;
     }
     .list, th{
         width: 2000px;
@@ -102,17 +99,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family
     =Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div id="logo" class="logo">
-    <a href="/index">
+    <a href="/member">
         <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="/index">사용자 관리</a></li>
+        <li><a href="/member">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -159,21 +157,24 @@
             <caption style="font-size: 20px; margin-bottom: 10px;">입양상식 목록</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <th>Select</th> <!-- 체크박스 -->
+                <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
                 <th>ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Add Date</th>
-                <th>Delete Date</th>
-                <th>Member ID</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>등록일</th>
+                <th>수정일</th>
+                <th>관리자 ID</th>
             </tr>
             </thead>
             <tbody>
             <!-- faq_list를 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
             <tr th:each="faq : ${faq_list}">
-                <td><input type="checkbox" th:value="${faq.faq_id}" name="faqIds" /></td> <!-- 체크박스 -->
+                <td><input type="checkbox" th:value="${faq.faq_id}" name="faqIds"
+                /></td> <!-- 체크박스 -->
                 <td th:text="${faq.faq_id}"></td>
-                <td th:text="${faq.title}"></td>
+                <td>
+                    <a th:text="${faq.title}" th:href="@{/faq_detail(faqId=${faq.faq_id})}"></a>
+                </td>
                 <td th:text="${faq.content}"></td>
                 <td th:text="${faq.add_date}"></td>
                 <td th:text="${faq.delete_date}"></td>
@@ -183,8 +184,8 @@
         </table>
 
     </div>
-    <button type="submit" class="btn_d btnS">삭제</button>
-    <button type="submit" class="btn_c btnS">등록</button>
+    <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
+    <button type="submit" class="btn_c btnS" onclick="location.href='/faq_detail'">등록</button>
     <div class="page">
         <span><<</span> <span><</span>
         <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
@@ -193,17 +194,41 @@
 </div>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
-      openNav();
     });
 
-    function openNav() {
-      document.getElementById("menu").style.width = "200px";
-      document.getElementById("main").style.marginLeft = "250px";
+    function allChecked(){
+        if($("#allCheckBox").is(':checked')){
+            $("input[name=faqIds]").prop("checked", true);
+        } else{
+            $("input[name=faqIds]").prop("checked", false);
+        }
     }
+    function deleteCheckBox(){
+        var arr = new Array();
 
-    function closeNav() {
-      document.getElementById("menu").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
+        $("input[name='faqIds']:checked").each(function() {
+            arr.push(parseInt($(this).attr('value')));
+        });
+        if(arr.length === 0){
+            alert("선택된 글이 없습니다.");
+        } else{
+            console.log(arr);
+            $.ajax({
+                type: "POST",
+                url: "/delete_faq",
+                contentType:"application/json",
+                data: JSON.stringify(arr),
+                dataType: "json",
+                success: function(jdata){
+                    if (jdata == 1) {
+                        location.href = '/faq'  //삭제 성공시 리스트 새로고침
+                    }else {
+                        alert("삭제 실패하였습니다.");
+                    }
+                },
+                error: function(){alert("서버통신 오류");}
+            });
+        }
     }
 </script>
 </body>

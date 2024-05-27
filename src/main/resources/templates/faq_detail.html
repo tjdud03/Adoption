@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .table{
+            border: 1px solid black;
+            width: 50%
+        }
+        .table th{
+            border: 1px solid;
+        }
+        .table td{
+            width: 20px;
+            border: 1px solid;
+        }
+        .btn_c{
+             border: 1px solid black;
+             background-color: #D7EFE7;
+             <!-- float: right; -->
+             margin-top: 20px;
+         }
+        .btn_d{
+            border: 1px solid black;
+            background-color: #D7EFE7;
+            margin-top: 20px;
+        }
+        .btnS{
+            border: 1px solid black;
+            background-color: #D7EFE7;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="table" class="list">
+    <table class="table">
+        <caption style="font-size: 20px; margin-bottom: 10px;">입양상식 목록</caption>
+        <thead>
+        <tr style="background-color: #D7EFE7">
+            <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
+            <th>ID</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>등록일</th>
+            <th>수정일</th>
+            <th>관리자 ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- faq_list를 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
+        <tr th:each="faq : ${faq_list}">
+            <td><input type="checkbox" th:value="${faq.faq_id}" name="faqIds"
+            /></td> <!-- 체크박스 -->
+            <td th:text="${faq.faq_id}"></td>
+            <td>
+                <a th:text="${faq.title}" th:href="@{/faq_detail(faqId=${faq.faq_id})}"></a>
+            </td>
+            <td th:text="${faq.content}"></td>
+            <td th:text="${faq.add_date}"></td>
+            <td th:text="${faq.delete_date}"></td>
+            <td th:text="${faq.member_id}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<button type="submit" class="btn_d btnS" onclick="update_faq()">수정</button>
+<button type="submit" class="btn_c btnS" onclick="create_faq()">등록</button>
+</body>
+</html>
