@@ -84,14 +84,14 @@
 </head>
 <body>
 <div id="logo" class="logo">
-    <a href="/index">
+    <a href="/member">
         <img class="logoImg" src="logo.png" alt="로고" width="100px" height="100px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="/index">사용자 관리</a></li>
+        <li><a href="/member">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -113,7 +113,7 @@
     </ul>
 </div>
 <div id="main" class="main">
-    <p style="margin-top: 28px;">관리자 관리</p>
+    <p style="margin-top: 28px;">문의 관리</p>
     <div id="search" class="search">
         <div id="item" class="item">
             <form action="#">
@@ -135,18 +135,28 @@
     </div>
     <div id="table" class="list">
         <table class="table">
-            <caption style="font-size: 20px; margin-bottom: 10px;">문의 목록</caption>
+            <caption style="font-size: 20px; margin-bottom: 10px;">입양상식 목록</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
-                <td><input type="checkbox"></td>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>비밀번호</th>
-                <th>전화번호</th>
-                <th>이메일</th>
+                <th>선택</th> <!-- 체크박스 -->
+                <th>ID</th>
+                <th>회원 ID</th>
+                <th>내용</th>
+                <th>등록일</th>
+                <th>수정일</th>
+                <th>회원 ID</th>
             </tr>
             </thead>
             <tbody>
+            <!-- faq_list를 반복하여 각 FAQ 객체를 표의 행으로 표시 -->
+            <tr th:each="question : ${question_list}">
+                <td><input type="checkbox" th:value="${question.q_id}" name="qIds" /></td> <!-- 체크박스 -->
+                <td th:text="${question.q_id}"></td>
+                <td th:text="${question.member_id}"></td>
+                <td th:text="${question.content}"></td>
+                <td th:text="${question.add_date}"></td>
+                <td th:text="${question.change_date}"></td>
+            </tr>
             </tbody>
         </table>
     </div>
