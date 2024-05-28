@@ -117,6 +117,8 @@ public class AdminController {
         //System.out.println(faqOptional);
         return "faq_detail";
     }
+
+
     /*@ResponseBody
     @RequestMapping(value = {"/faq_create"}, method = { RequestMethod.GET })
     public Optional detail_faq(@RequestParam("faqId") Integer faqId) {
