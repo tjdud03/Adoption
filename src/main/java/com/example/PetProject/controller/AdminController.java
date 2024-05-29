@@ -9,13 +9,14 @@ import com.example.PetProject.service.BannerService;
 import com.example.PetProject.service.BreedService;
 import com.example.PetProject.service.FaqService;
 import com.example.PetProject.service.QuestionService;
+import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -57,6 +58,27 @@ public class AdminController {
         return "banner_admin";
     }
 
+    @GetMapping("/breed")
+    public String breedpage(Model model){
+        List<Breed> breed_list = breedService.getReportedAndDeletedBreeds();
+        model.addAttribute("breed_list", breed_list);
+        return "breed";
+    }
+
+    @GetMapping("/breed/view/{id}")
+    public String viewBreed(@PathVariable("id") Integer id, Model model) {
+        Breed breed = breedService.getBreedById(id);
+        model.addAttribute("breed", breed);
+        return "breed_view";
+    }
+
+    /*@GetMapping("/breed")
+    public String breedpage(@RequestParam(defaultValue = "0") int page, Model model) {
+        Page<Breed> breedPage = breedService.getReportedAndDeletedBreeds(PageRequest.of(page, 10));
+        model.addAttribute("breedPage", breedPage);
+        return "breed";
+    }*/
+
     @GetMapping("/index")
     public String indexpage() {
         return "redirect:/index.html";
@@ -92,16 +114,6 @@ public class AdminController {
         return "community";
     }
 
-    @GetMapping("/review")
-    public String reviewpage(){
-        return "review";
-    }
-
-    @GetMapping("/boast")
-    public String boastpage(){
-        return "boast";
-    }
-
     @ResponseBody
     @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
     public int delete_faq(@RequestBody List<Integer> faqIds) {
@@ -116,6 +128,16 @@ public class AdminController {
         //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
         //System.out.println(faqOptional);
         return "faq_detail";
+    }
+
+    @ResponseBody
+    @RequestMapping(value =  {"/delete_breed"}, method = {RequestMethod.POST})
+    public  int delete_breed(@RequestBody List<Integer> breedIds){
+        return breedService.deleteBreed(breedIds);
+    }
+    @RequestMapping(value = {"/breed_view"}, method = {RequestMethod.GET})
+    public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds){
+        return "breed_view";
     }
     /*@ResponseBody
     @RequestMapping(value = {"/faq_create"}, method = { RequestMethod.GET })

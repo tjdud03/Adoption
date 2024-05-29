@@ -105,11 +105,6 @@
     <ul>
         <li class="title">
             <div class="font_bold"><a href="/community">커뮤니티 관리</a></div>
-            <ul class="sub">
-                <li class="font_bold"><a href="/community">- Q&A</a></li>
-                <li><a href="/review">- 분양후기</a></li>
-                <li><a href="/boast">- 자랑글</a></li>
-            </ul>
         </li>
     </ul>
     <ul>
@@ -123,7 +118,7 @@
     </ul>
 </div>
 <div id="main" class="main">
-    <p style="margin-top: 28px;">Q&A 관리</p>
+    <p style="margin-top: 28px;">커뮤니티 관리</p>
     <div id="search" class="search">
         <div id="item" class="item">
             <form action="#">
@@ -143,7 +138,7 @@
     </div>
     <div id="table" class="list">
         <table class="table">
-            <caption style="font-size: 20px; margin-bottom: 10px;">Q&A 관리</caption>
+            <caption style="font-size: 20px; margin-bottom: 10px;">커뮤니티 관리</caption>
             <thead>
             <tr style="background-color: #D7EFE7">
                 <td><input type="checkbox"></td>
@@ -161,6 +156,8 @@
         </table>
     </div>
 </div>
+    <button type="submit" class="btn_d btnS" onclick="delete()">삭제</button>
+    <button type="submit" class="btn_c btnS">등록</button>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
       openNav();
