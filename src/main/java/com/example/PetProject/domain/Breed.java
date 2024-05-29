@@ -21,7 +21,7 @@ public class Breed {
     @Column(name = "content", length = 255)
     private String content;
 
-    @Column(name = "img")
+    @Column(name = "static/img")
     private String img;
     /*private byte[] img;*/
 
