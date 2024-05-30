@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     .logo a{
-        text-decoration-line: none;
+    text-decoration-line: none;
     }
     .logo a:link{
         color: black;
@@ -24,10 +24,11 @@
     }
     .menu{
         float: left;
-        margin: 30px;
+        margin: 10px;
         box-sizing: border-box;
         background-color: #D7EFE7;
     }
+
     .menu ul{
         list-style-type: none;
     }
@@ -45,6 +46,7 @@
         margin-bottom: 20px;
         border: 1px solid black;
         text-align: center;
+        margin-left: 200px;
     }
     .item{
         margin: 3px;
@@ -56,6 +58,7 @@
     .btnS{
         border: 1px solid black;
         background-color: #D7EFE7;
+        cursor: pointer;
     }
     .list, th{
         width: 2000px;
@@ -73,9 +76,53 @@
         width: 20px;
         border: 1px solid;
     }
-    .font_bold{
-        font-weight: bold;
+    .page{
+        text-align: center;
+        margin-top: 30px;
     }
+    .btn_c{
+        border: 1px solid black;
+        background-color: #D7EFE7;
+        float: right;
+        margin-top: 20px;
+    }
+    .btn_d{
+        border: 1px solid black;
+        background-color: #D7EFE7;
+        margin-top: 20px;
+    }
+
+
+    body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .board-view {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .board-view th, .board-view td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .board-view th {
+            width: 150px;
+            background-color: #f9f9f9;
+        }
+
+        .buttons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+        .buttons-left, .buttons-right {
+            display: flex;
+            gap: 10px;
+        }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -87,7 +134,7 @@
 </head>
 <body>
 <div id="logo" class="logo">
-    <a href="/index">
+    <a href="/member">
         <img class="logoImg" src="logo.png" alt="로고" width="150px" height="150px">
         <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </a>
@@ -99,18 +146,11 @@
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
     </ul>
-    <ul>
+    <ul style="font-weight:bold;">
         <li><a href="/breed">게시글 관리</a></li>
     </ul>
     <ul>
-        <li class="title">
-            <div class="font_bold"><a href="/community">커뮤니티 관리</a></div>
-            <ul class="sub">
-                <li><a href="/community">- Q&A</a></li>
-                <li class="font_bold"><a href="/review">- 분양후기</a></li>
-                <li><a href="/boast">- 자랑글</a></li>
-            </ul>
-        </li>
+        <li><a href="/community">커뮤니티 관리</a></li>
     </ul>
     <ul>
         <li><a href="/faq">입양상식</a></li>
@@ -122,43 +162,41 @@
         <li><a href="/question">문의 관리</a></li>
     </ul>
 </div>
-<div id="main" class="main">
-    <p style="margin-top: 28px;">분양후기 관리</p>
-    <div id="search" class="search">
-        <div id="item" class="item">
-            <form action="#">
-                <select>
-                    <option value="all">전체</option>
-                    <option value="name">신고</option>
-                    <option value="email">삭제</option>
-                </select>
-            </form>
-        </div>
-        <div id="text" class="text">
-            <form action="#">
-                <input type="text" name="query" value="" placeholder="검색어 입력">
-                <button type="submit" class="btnS">검색</button>
-            </form>
-        </div>
-    </div>
-    <div id="table" class="list">
-        <table class="table">
-            <caption style="font-size: 20px; margin-bottom: 10px;">분양후기 관리</caption>
-            <thead>
-            <tr style="background-color: #D7EFE7">
-                <td><input type="checkbox"></td>
-                <th>No.</th>
-                <th>상태</th>
+<p style="font-weight : bold;">게시글</p>
+<div class="container">
+    <div class="board-view">
+        <table>
+            <tr>
                 <th>제목</th>
+                <td colspan="5"><span th:text="${breed.title}"></span></td>
                 <th>등록자</th>
-                <th>등록일</th>
-                <th>노출일</th>
-                <th>조회</th>
+                <td><span th:text="${breed.member_id}"></span></td>
             </tr>
-            </thead>
-            <tbody>
-            </tbody>
+            <tr>
+                <th>품종</th>
+                <td> <span th:text="${breed.breed}"></span></td>
+                <th>상태</th>
+                <td><span th:text="${breed.state}"></span></td>
+                <th>등록일</th>
+                <td><span th:text="${breed.add_date}"></span></td>
+                <th>수정일</th>
+                <td></strong> <span th:text="${breed.change_date}"></span></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td colspan="7" style="height: 200px; vertical-align: top;">
+                </td>
+            </tr>
         </table>
+        <div class="buttons">
+            <div class="buttons-left">
+            <button onclick="history.back()">이전</button>
+            <button onclick="location.href='/board/list'">목록</button>
+            <button onclick="location.href='/board/next'">다음</button>
+        </div>
+                <div class="buttons-right">
+            <button onclick="deletePost()">삭제</button>
+        </div>
     </div>
 </div>
 <script>
@@ -175,6 +213,12 @@
       document.getElementById("menu").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
     }
+
+    function viewDetails(checkbox) {
+    const breedId = checkbox.value;
+    window.location.href = `/breed/view/${breedId}`;
+}
 </script>
+
 </body>
 </html>

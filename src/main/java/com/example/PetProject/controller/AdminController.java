@@ -57,6 +57,27 @@ public class AdminController {
         return "banner_admin";
     }
 
+    @GetMapping("/breed")
+    public String breedpage(Model model){
+        List<Breed> breed_list = breedService.getReportedAndDeletedBreeds();
+        model.addAttribute("breed_list", breed_list);
+        return "breed";
+    }
+
+    @GetMapping("/breed/view/{id}")
+    public String viewBreed(@PathVariable("id") Integer id, Model model) {
+        Breed breed = breedService.getBreedById(id);
+        model.addAttribute("breed", breed);
+        return "breed_view";
+    }
+
+    /*@GetMapping("/breed")
+    public String breedpage(@RequestParam(defaultValue = "0") int page, Model model) {
+        Page<Breed> breedPage = breedService.getReportedAndDeletedBreeds(PageRequest.of(page, 10));
+        model.addAttribute("breedPage", breedPage);
+        return "breed";
+    }*/
+
     @GetMapping("/index")
     public String indexpage() {
         return "redirect:/index.html";
@@ -88,55 +109,52 @@ public class AdminController {
     }
 
     @GetMapping("/community")
-    public String communitypage() {
+    public String communitypage(){
         return "community";
     }
 
-    @GetMapping("/review")
-    public String reviewpage() {
-        return "review";
-    }
-
-    @GetMapping("/boast")
-    public String boastpage() {
-        return "boast";
-    }
-
-    //삭제버튼 누를시 db delete
     @ResponseBody
-    @RequestMapping(value = {"/delete_faq"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
     public int delete_faq(@RequestBody List<Integer> faqIds) {
         return faqService.deleteFAQs(faqIds);
     }
 
-    //수정 및 상세정보 페이지 띄우기
-    @RequestMapping(value = {"/faq_detail"}, method = {RequestMethod.GET})
-    public String detail_faq(@RequestParam(value = "faqId", required = false) Integer faqId,
-                             Model model) {
-        Optional<FAQ> faq_detailList = faqService.detailFAQs(faqId);
-        model.addAttribute("faq_detailList", faq_detailList);
+
+    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
+    public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
+        //System.out.println(faqId);
+        //faqService.detailFAQs();
+        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
+        //System.out.println(faqOptional);
         return "faq_detail";
     }
-    
-    // 수정버튼 누를 시 입력되어있는 정보 db에 update
+
     @ResponseBody
-    @RequestMapping(value = {"/update_faq"}, method = {RequestMethod.POST})
-    public int update_faq(@RequestBody FAQ faq_updateOp){
-        return faqService.updateFAQs(faq_updateOp);
+    @RequestMapping(value =  {"/delete_breed"}, method = {RequestMethod.POST})
+    public  int delete_breed(@RequestBody List<Integer> breedIds){
+        return breedService.deleteBreed(breedIds);
     }
-
-    //등록 미완성 로그인 구현 후 완성
-
-    //등록페이지 띄우기
-    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.GET})
-    public String insertPage_faq() {
-        return "faq_insert";
+    @RequestMapping(value = {"/breed_view"}, method = {RequestMethod.GET})
+    public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds){
+        return "breed_view";
     }
+    /*@ResponseBody
+    @RequestMapping(value = {"/faq_create"}, method = { RequestMethod.GET })
+    public Optional detail_faq(@RequestParam("faqId") Integer faqId) {
+        //System.out.println(faqId);
 
-    //등록버튼 누르면 db에 insert
-    @ResponseBody
-    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.POST})
-    public int insert_faq(@RequestBody FAQ faq_insertOp){
-        return faqService.insertFAQs(faq_insertOp);
-    }
+        Optional<FAQ> faqOptional = faqRepository.findById(faqId);
+        //System.out.println(faqOptional);
+        return faqOptional;
+    }*/
+    /*@ResponseBody
+    @RequestMapping(value = {"/faq_detail"}, method = { RequestMethod.GET })
+    public int detail_faq(@RequestParam("faqId") Integer faqId, Optional<FAQ> faqOptional) {
+        //System.out.println(faqId);
+        // Integer faqId
+
+        //System.out.println(faqOptional);
+        //return faqOptional;
+        return faqService.detailFAQs(faqId);
+    }*/
 }
