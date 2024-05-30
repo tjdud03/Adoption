@@ -88,52 +88,55 @@ public class AdminController {
     }
 
     @GetMapping("/community")
-    public String communitypage(){
+    public String communitypage() {
         return "community";
     }
 
     @GetMapping("/review")
-    public String reviewpage(){
+    public String reviewpage() {
         return "review";
     }
 
     @GetMapping("/boast")
-    public String boastpage(){
+    public String boastpage() {
         return "boast";
     }
 
+    //삭제버튼 누를시 db delete
     @ResponseBody
-    @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
+    @RequestMapping(value = {"/delete_faq"}, method = {RequestMethod.POST})
     public int delete_faq(@RequestBody List<Integer> faqIds) {
         return faqService.deleteFAQs(faqIds);
     }
 
-
-    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
-    public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
-        //System.out.println(faqId);
-        //faqService.detailFAQs();
-        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
-        //System.out.println(faqOptional);
+    //수정 및 상세정보 페이지 띄우기
+    @RequestMapping(value = {"/faq_detail"}, method = {RequestMethod.GET})
+    public String detail_faq(@RequestParam(value = "faqId", required = false) Integer faqId,
+                             Model model) {
+        Optional<FAQ> faq_detailList = faqService.detailFAQs(faqId);
+        model.addAttribute("faq_detailList", faq_detailList);
         return "faq_detail";
     }
-    /*@ResponseBody
-    @RequestMapping(value = {"/faq_create"}, method = { RequestMethod.GET })
-    public Optional detail_faq(@RequestParam("faqId") Integer faqId) {
-        //System.out.println(faqId);
+    
+    // 수정버튼 누를 시 입력되어있는 정보 db에 update
+    @ResponseBody
+    @RequestMapping(value = {"/update_faq"}, method = {RequestMethod.POST})
+    public int update_faq(@RequestBody FAQ faq_updateOp){
+        return faqService.updateFAQs(faq_updateOp);
+    }
 
-        Optional<FAQ> faqOptional = faqRepository.findById(faqId);
-        //System.out.println(faqOptional);
-        return faqOptional;
-    }*/
-    /*@ResponseBody
-    @RequestMapping(value = {"/faq_detail"}, method = { RequestMethod.GET })
-    public int detail_faq(@RequestParam("faqId") Integer faqId, Optional<FAQ> faqOptional) {
-        //System.out.println(faqId);
-        // Integer faqId
+    //등록 미완성 로그인 구현 후 완성
 
-        //System.out.println(faqOptional);
-        //return faqOptional;
-        return faqService.detailFAQs(faqId);
-    }*/
+    //등록페이지 띄우기
+    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.GET})
+    public String insertPage_faq() {
+        return "faq_insert";
+    }
+
+    //등록버튼 누르면 db에 insert
+    @ResponseBody
+    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.POST})
+    public int insert_faq(@RequestBody FAQ faq_insertOp){
+        return faqService.insertFAQs(faq_insertOp);
+    }
 }

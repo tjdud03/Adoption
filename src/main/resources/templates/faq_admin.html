@@ -24,8 +24,10 @@
     }
     .menu{
         float: left;
-        margin: 10px;
-        box-sizing: border-box;
+        margin-top: 30px;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-sizing: content-box;
         background-color: #D7EFE7;
     }
 
@@ -61,13 +63,13 @@
         cursor: pointer;
     }
     .list, th{
-        width: 2000px;
         word-break: break-all;
         border-collapse: 1px;
     }
     .table{
         border: 1px solid black;
-        width: 50%
+        width: 80%;
+        margin-left: 200px;
     }
     .table th{
         border: 1px solid;
@@ -85,11 +87,13 @@
         background-color: #D7EFE7;
         float: right;
         margin-top: 20px;
+        margin-right: 50px;
     }
     .btn_d{
         border: 1px solid black;
         background-color: #D7EFE7;
         margin-top: 20px;
+        margin-left: 30px;
     }
 </style>
 <head>
@@ -132,7 +136,7 @@
     </ul>
 </div>
 <div id="main" class="main">
-    <p style="margin-top: 28px;">입양상식 관리</p>
+    <p style="margin-top: 28px; margin-left: 200px; margin-bottom: 20px; font-weight: bold;">입양상식 관리</p>
     <div id="search" class="search">
         <div id="item" class="item">
             <form action="#">
@@ -163,7 +167,7 @@
                 <th>내용</th>
                 <th>등록일</th>
                 <th>수정일</th>
-                <th>관리자 ID</th>
+                <th>등록자 ID</th>
             </tr>
             </thead>
             <tbody>
@@ -177,15 +181,14 @@
                 </td>
                 <td th:text="${faq.content}"></td>
                 <td th:text="${faq.add_date}"></td>
-                <td th:text="${faq.delete_date}"></td>
+                <td th:text="${faq.change_date}"></td>
                 <td th:text="${faq.member_id}"></td>
             </tr>
             </tbody>
         </table>
-
     </div>
     <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
-    <button type="submit" class="btn_c btnS" onclick="location.href='/faq_detail'">등록</button>
+    <button type="submit" class="btn_c btnS" onclick="location.href = '/insert_faq'">등록</button>
     <div class="page">
         <span><<</span> <span><</span>
         <span>1</span ><span>2</span><span>3</span><span>4</span><span>5</span>
@@ -206,9 +209,11 @@
     function deleteCheckBox(){
         var arr = new Array();
 
+        //선택된 체크박스의 id가져와서 배열에 값 집어넣기
         $("input[name='faqIds']:checked").each(function() {
             arr.push(parseInt($(this).attr('value')));
         });
+
         if(arr.length === 0){
             alert("선택된 글이 없습니다.");
         } else{
@@ -219,8 +224,8 @@
                 contentType:"application/json",
                 data: JSON.stringify(arr),
                 dataType: "json",
-                success: function(jdata){
-                    if (jdata == 1) {
+                success: function(deldata){
+                    if (deldata == 1) {
                         location.href = '/faq'  //삭제 성공시 리스트 새로고침
                     }else {
                         alert("삭제 실패하였습니다.");
@@ -230,6 +235,9 @@
             });
         }
     }
+
+
+
 </script>
 </body>
 </html>

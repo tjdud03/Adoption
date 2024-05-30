@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Builder
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "faq", catalog = "pet_data")
 public class FAQ {
@@ -24,19 +27,19 @@ public class FAQ {
     @Column(name = "add_date", length = 50)
     private String add_date;
 
-    @Column(name = "delete_date", length = 50)
-    private String delete_date;
+    @Column(name = "change_date", length = 50)
+    private String change_date;
 
     @Column(name = "member_id", length = 50, nullable = false)
     private Integer member_id;
 
     @Builder
-    public FAQ(Integer faq_id, String title, String content, String add_date, String delete_date, Integer member_id) {
+    public FAQ(Integer faq_id, String title, String content, String add_date, String change_date, Integer member_id) {
         this.faq_id = faq_id;
         this.title = title;
         this.content = content;
         this.add_date = add_date;
-        this.delete_date = delete_date;
+        this.change_date = change_date;
         this.member_id = member_id;
     }
 }
