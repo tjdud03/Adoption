@@ -1,14 +1,8 @@
 package com.example.PetProject.controller;
 
-import com.example.PetProject.domain.Banner;
-import com.example.PetProject.domain.Breed;
-import com.example.PetProject.domain.FAQ;
-import com.example.PetProject.domain.Question;
+import com.example.PetProject.domain.*;
 import com.example.PetProject.repository.FaqRepository;
-import com.example.PetProject.service.BannerService;
-import com.example.PetProject.service.BreedService;
-import com.example.PetProject.service.FaqService;
-import com.example.PetProject.service.QuestionService;
+import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,15 +19,17 @@ public class AdminController {
     private final BannerService bannerService;
     private final FaqRepository faqRepository;
     private final BreedService breedService;
+    private final MemberService memberService;
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, FaqRepository faqRepository, BreedService breedService) {
+    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, FaqRepository faqRepository, BreedService breedService, MemberService memberService) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
         this.faqRepository = faqRepository;
         this.breedService = breedService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/faq")
@@ -84,7 +80,9 @@ public class AdminController {
     }
 
     @GetMapping("/member")
-    public String memberpage() {
+    public String memberpage(Model model) {
+        List<Member> member_list = memberService.getList();
+        model.addAttribute("member_list", member_list);
         return "member";
     }
 
