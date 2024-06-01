@@ -7,16 +7,11 @@ import com.example.PetProject.service.BreedService;
 import com.example.PetProject.service.FaqService;
 import com.example.PetProject.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
@@ -71,13 +66,6 @@ public class AdminController {
         model.addAttribute("breed", breed);
         return "breed_view";
     }
-
-    /*@GetMapping("/breed")
-    public String breedpage(@RequestParam(defaultValue = "0") int page, Model model) {
-        Page<Breed> breedPage = breedService.getReportedAndDeletedBreeds(PageRequest.of(page, 10));
-        model.addAttribute("breedPage", breedPage);
-        return "breed";
-    }*/
 
     @GetMapping("/index")
     public String indexpage() {
@@ -157,22 +145,6 @@ public class AdminController {
         //System.out.println(faqOptional);
         //return faqOptional;
         return faqService.detailFAQs(faqId);
-    }*/
-
-
-    // /breed/paging? page=1 (기본 1페이지 줄거임)
-   /* @GetMapping("/breed")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
-        Page<Breed> breedList = breedService.paging(pageable);
-        int blockLimit = 10;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < breedList.getTotalPages()) ? startPage + blockLimit - 1 : breedList.getTotalPages();
-
-        model.addAttribute("breedList", breedList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        return "breed";
     }*/
 
 }

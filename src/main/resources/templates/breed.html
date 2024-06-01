@@ -132,14 +132,6 @@
                 <button type="submit" class="btnS">검색</button>
             </form>
         </div>
-        <!--<div id="text" class="text">
-            <form action="#">
-                &lt;!&ndash;<input type="text" name="keyword" value="">
-                <input type="text" name="query" value="" placeholder="검색어 입력">
-                &lt;!&ndash;<input type="button" onclick="getSearchList()" value="검색">&ndash;&gt;
-                <button type="submit" class="btnS">검색</button>&ndash;&gt;
-            </form>
-        </div>-->
     </div>
     <div id="table" class="list">
         <table class="table">
@@ -175,19 +167,6 @@
              </tbody>
         </table>
 </div>
-   <!-- <div>
-        <ul class="pagination">
-            <li th:if="${startPage > 1}" class="page-item">
-                <a class="page-link" th:href="@{'/breed?page=' + (${startPage} - 1)}">이전</a>
-            </li>
-            <li th:each="i : ${#numbers.sequence(startPage, endPage)}" class="page-item" th:classappend="${i == page ? 'active' : ''}">
-                <a class="page-link" th:href="@{'/breed?page=' + ${i}}" th:text="${i}">1</a>
-            </li>
-            <li th:if="${endPage < breedList.totalPages}" class="page-item">
-                <a class="page-link" th:href="@{'/breed?page=' + (${endPage} + 1)}">다음</a>
-            </li>
-        </ul>
-      </div>-->
     <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
     <button type="submit" class="btn_c btnS">등록</button>
 </div>
