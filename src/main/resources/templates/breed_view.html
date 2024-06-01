@@ -58,7 +58,6 @@
     .btnS{
         border: 1px solid black;
         background-color: #D7EFE7;
-        cursor: pointer;
     }
     .list, th{
         width: 2000px;
@@ -141,7 +140,7 @@
 </div>
 <div id="menu" class="menu">
     <ul>
-        <li><a href="/index">사용자 관리</a></li>
+        <li><a href="/member">사용자 관리</a></li>
     </ul>
     <ul>
         <li><a href="/sponsor">후원 관리</a></li>
@@ -190,13 +189,14 @@
         </table>
         <div class="buttons">
             <div class="buttons-left">
-            <button onclick="history.back()">이전</button>
-            <button onclick="location.href='/board/list'">목록</button>
-            <button onclick="location.href='/board/next'">다음</button>
+            <button onclick="navigateToPreviousBreed(${breed.breed_id})">이전</button>
+            <button onclick="location.href='/breed'">목록</button>
+            <button onClick="history.forward(1)">다음</button><!--"location.href='/breed/next'"-->
         </div>
                 <div class="buttons-right">
             <button onclick="deletePost()">삭제</button>
-        </div>
+            </div>
+         </div>
     </div>
 </div>
 <script>
@@ -213,12 +213,12 @@
       document.getElementById("menu").style.width = "0";
       document.getElementById("main").style.marginLeft= "0";
     }
-
     function viewDetails(checkbox) {
-    const breedId = checkbox.value;
-    window.location.href = `/breed/view/${breedId}`;
-}
-</script>
+        const breedId = checkbox.value;
+        window.location.href = `/breed/view/${breedId}`;
+    }
+ }
 
+</script>
 </body>
 </html>

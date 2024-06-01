@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class Breed {
     @Column(name = "content", length = 255)
     private String content;
 
-    @Column(name = "static/img")
+    @Column(name = "img")
     private String img;
     /*private byte[] img;*/
 
@@ -50,6 +52,7 @@ public class Breed {
         this.breed = breed;
         this.add_date = add_date;
         this.change_date = change_date;
+        this.member_id = member_id;
         this.state = state;
     }
 }
