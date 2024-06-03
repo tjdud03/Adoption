@@ -1,14 +1,8 @@
 package com.example.PetProject.controller;
 
-import com.example.PetProject.domain.Banner;
-import com.example.PetProject.domain.Breed;
-import com.example.PetProject.domain.FAQ;
-import com.example.PetProject.domain.Question;
+import com.example.PetProject.domain.*;
 import com.example.PetProject.repository.FaqRepository;
-import com.example.PetProject.service.BannerService;
-import com.example.PetProject.service.BreedService;
-import com.example.PetProject.service.FaqService;
-import com.example.PetProject.service.QuestionService;
+import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
