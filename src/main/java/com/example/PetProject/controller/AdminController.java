@@ -2,6 +2,9 @@ package com.example.PetProject.controller;
 
 import com.example.PetProject.domain.*;
 import com.example.PetProject.service.*;
+import com.example.PetProject.domain.*;
+import com.example.PetProject.repository.FaqRepository;
+import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,12 +22,13 @@ public class AdminController {
     private final QuestionService questionService;
     private final BannerService bannerService;
     private final BreedService breedService;
+    private final MemberService memberService;
     private final LoginService loginService;
 
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, BreedService breedService,
+    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, BreedService breedService, MemberService memberService
                            LoginService loginService) {
         this.faqService = faqService;
         this.questionService = questionService;
@@ -39,6 +43,7 @@ public class AdminController {
 
         ResponseEntity<?> token = loginService.login(logindata);
         return token;
+        this.memberService = memberService;
     }
 
     @GetMapping("/faq")
@@ -89,7 +94,9 @@ public class AdminController {
     }
 
     @GetMapping("/member")
-    public String memberpage() {
+    public String memberpage(Model model) {
+        List<Member> member_list = memberService.getList();
+        model.addAttribute("member_list", member_list);
         return "member";
     }
 
@@ -119,6 +126,22 @@ public class AdminController {
     }
 
 
+
+    @ResponseBody
+    @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
+    public int delete_faq(@RequestBody List<Integer> faqIds) {
+        return faqService.deleteFAQs(faqIds);
+    }
+
+
+    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
+    public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
+        //System.out.println(faqId);
+        //faqService.detailFAQs();
+        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
+        //System.out.println(faqOptional);
+        return "faq_detail";
+    }
 
     @ResponseBody
     @RequestMapping(value =  {"/delete_breed"}, method = {RequestMethod.POST})
