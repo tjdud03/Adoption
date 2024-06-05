@@ -2,9 +2,6 @@ package com.example.PetProject.controller;
 
 import com.example.PetProject.domain.*;
 import com.example.PetProject.service.*;
-import com.example.PetProject.domain.*;
-import com.example.PetProject.repository.FaqRepository;
-import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -123,16 +120,6 @@ public class AdminController {
     @GetMapping("/community")
     public String communitypage(){
         return "community";
-    }
-
-
-    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
-    public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
-        //System.out.println(faqId);
-        //faqService.detailFAQs();
-        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
-        //System.out.println(faqOptional);
-        return "faq_detail";
     }
 
     @ResponseBody
