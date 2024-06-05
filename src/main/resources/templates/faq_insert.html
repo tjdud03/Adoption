@@ -83,16 +83,6 @@
     <table class="table">
         <caption style="font-size: 20px; margin-bottom: 20px;">입양상식관리 상세페이지</caption>
         <tr>
-            <td class="content_title">ID</td>
-            <td class="input_box" id="ID_faq"></td>
-            <td class="content_title">등록자</td>
-            <td id="admin_faq" name="title" class="input_box"></td>
-
-<!--
-            th:text="${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''}"
--->
-        </tr>
-        <tr>
             <td class="content_title">제목</td>
             <td colspan="3">
                     <textarea id="title_faq" name="title" class="txtarea"></textarea></td>
@@ -110,22 +100,18 @@
 </div>
 <script>
     function insert_Faq(){
-        let faq_id = $("#ID_faq").text();
-        let member_id = $("#admin_faq").text();
-        let add_date = $("#addDate_faq").text();
-        let change_date = $("#changeDate_faq").text();
+
         let title = $("#title_faq").val();
         let content = $("#contents_faq").val();
+        let member_id = localStorage.getItem('memberId');
 
 
         let InsertData = {
-            "faq_id": faq_id,
             "member_id": member_id,
-            "add_date": add_date,
-            "change_date": change_date,
             "title": title,
             "content": content
         }
+
 
         $.ajax({
             type: "POST",
@@ -133,9 +119,10 @@
             contentType:"application/json",
             dataType: "json",
             data: JSON.stringify(InsertData),
-            success: function(idata){
-                if (idata === 1) {
+            success: function(res){
+                if (res === 0) {
                     alert("등록 되었습니다.");
+                    location.href='/faq';
                 }else {
                     alert("등록 실패하였습니다.");
                 }

@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "Member", catalog = "pet_data")
-public class MemberDTO {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +47,8 @@ public class MemberDTO {
 
     //빌더
     @Builder
-    public MemberDTO(Integer member_id, String name, String pw, String phone, String birth, String email,
-                     String add_date, String change_date, String mem_type) {
+    public Member(Integer member_id, String name, String pw, String phone, String birth, String email,
+                  String add_date, String change_date, String mem_type) {
         this.member_id = member_id;
         this.name = name;
         this.pw = pw;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>US2 관리자 사이트</title>
@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jua&family=Lilita+One&family
     =Oswald:wght@200..700&family=Poetsen+One&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .login_box{
             margin-left: 30%;
@@ -54,10 +55,40 @@
             <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
         </div>
         <div>
-            <input class="idpw" type="text" id="id" name="id" placeholder="ID 입력하세요.">
+            <input class="idpw" type="text" id="email" name="email" placeholder="Email을 입력하세요.">
         </div>
-        <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord 입력하세요.">
+        <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord를 입력하세요.">
     </div>
-    <button class="login_btn" id="login_btn" type="submit" onclick="">LOGIN</button>
+    <button class="login_btn" id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
+<script>
+    function login_exe(){
+        let input_email = $("#email").val();
+        let input_pw = $("#pw").val();
+
+        let LoginData = {
+            "input_email" : input_email,
+            "input_pw" : input_pw
+        }
+
+            $.ajax({
+            type: "POST",
+            url: "/login",
+            contentType:"application/json",
+            dataType: "json",
+            data: JSON.stringify(LoginData),
+            success: function(res){
+                if(res.accessToken != null){
+                    localStorage.setItem('memberId', res.sessionData.memberId);
+                    localStorage.setItem('memType', res.sessionData.memType);
+                    location.href = '/member';
+                }
+            },
+            error: function(xhr, status, error) {
+                // 오류 발생한 경우
+                alert(xhr.responseText);
+            }
+        })
+    }
+</script>
 </body>
 </html>
