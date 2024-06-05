@@ -28,12 +28,13 @@ public class AdminController {
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, BreedService breedService, MemberService memberService
-                           LoginService loginService) {
+    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService,
+                           BreedService breedService, MemberService memberService, LoginService loginService) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
         this.breedService = breedService;
+        this.memberService = memberService;
         this.loginService = loginService;
     }
 
@@ -43,7 +44,6 @@ public class AdminController {
 
         ResponseEntity<?> token = loginService.login(logindata);
         return token;
-        this.memberService = memberService;
     }
 
     @GetMapping("/faq")
@@ -126,14 +126,6 @@ public class AdminController {
     }
 
 
-
-    @ResponseBody
-    @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
-    public int delete_faq(@RequestBody List<Integer> faqIds) {
-        return faqService.deleteFAQs(faqIds);
-    }
-
-
     @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
     public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
         //System.out.println(faqId);
@@ -152,6 +144,7 @@ public class AdminController {
     public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds){
         return "breed_view";
     }
+
 
     //삭제버튼 누를시 db delete
     @ResponseBody
