@@ -4,12 +4,16 @@ import com.example.PetProject.domain.*;
 import com.example.PetProject.repository.FaqRepository;
 import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -127,6 +131,26 @@ public class AdminController {
     @RequestMapping(value = {"/breed_view"}, method = {RequestMethod.GET})
     public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds){
         return "breed_view";
+    }
+    @GetMapping("/breed_user")
+    public String getBreedUserPage(Model model) {
+        List<Breed> breedList = breedService.getAllBreeds()
+                                            .stream()
+                                            .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
+                                            .collect(Collectors.toList()); //null값 허용, 수정 허용
+        model.addAttribute("breed_list", breedList);
+        return "breed_user";
+    }
+    @ResponseBody
+    @GetMapping("/search")
+    public List<Breed> searchBreeds(@RequestParam String query) {
+        List<Breed> allBreeds = breedService.findAllBreeds()
+                                                .stream()
+                                                .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
+                                                .collect(Collectors.toList());
+        return allBreeds.stream()
+                .filter(breed -> breed.getTitle().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
     }
     /*@ResponseBody
     @RequestMapping(value = {"/faq_create"}, method = { RequestMethod.GET })

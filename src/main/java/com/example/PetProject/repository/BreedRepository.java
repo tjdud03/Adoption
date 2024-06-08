@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BreedRepository extends JpaRepository<Breed, Integer> {
     List<Breed> findByStateIn(List<String> list);
+
+    List<Breed> findByStateIsNull();
 }

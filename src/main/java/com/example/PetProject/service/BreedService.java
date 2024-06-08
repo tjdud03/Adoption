@@ -4,6 +4,8 @@ import com.example.PetProject.domain.Breed;
 import com.example.PetProject.repository.BreedRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -26,16 +28,28 @@ public class BreedService {
 
     @Transactional
     public int deleteBreed(List<Integer> breedIds) {
-        int delResult = 0;
-        try {
-            List<Breed> breedToDelete = breedRepository.findAllById(breedIds);
-            breedRepository.deleteAll(breedToDelete);
-            delResult = 1;
-        } catch (Exception e) {
-            delResult = 0;
-        } finally {
-            return delResult;
-        }
+        return 0;
+    }
+
+    public List<Breed> getAllBreeds() {
+        return breedRepository.findAll();
+    }
+
+    public List<Breed> findBreedsWithNullState() {
+        return breedRepository.findByStateIsNull();
+    }
+
+    public Page<Breed> findAll(Pageable pageable) {
+        return breedRepository.findAll(pageable);
+    }
+
+    public List<Breed> getList() {
+        return breedRepository.findAll();
+    }
+
+    public List<Breed> findAllBreeds() {
+        // 모든 품종을 반환하는 로직을 여기에 구현합니다.
+        return breedRepository.findAll();  // Ensure to use the repository's method to get all breeds
     }
 }
 

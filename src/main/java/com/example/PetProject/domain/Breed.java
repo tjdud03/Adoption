@@ -55,4 +55,8 @@ public class Breed {
         this.member_id = member_id;
         this.state = state;
     }
+
+    public String getType() {
+        return breed;
+    }
 }
