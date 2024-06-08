@@ -4,9 +4,6 @@ import com.example.PetProject.domain.*;
 import com.example.PetProject.repository.FaqRepository;
 import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +18,29 @@ public class AdminController {
     private final FaqService faqService;
     private final QuestionService questionService;
     private final BannerService bannerService;
-    private final FaqRepository faqRepository;
     private final BreedService breedService;
     private final MemberService memberService;
+    private final LoginService loginService;
+
 
     // 생성자를 통한 의존성 주입
     @Autowired
-    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService, FaqRepository faqRepository, BreedService breedService, MemberService memberService) {
+    public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService,
+                           BreedService breedService, MemberService memberService, LoginService loginService) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
-        this.faqRepository = faqRepository;
         this.breedService = breedService;
         this.memberService = memberService;
+        this.loginService = loginService;
+    }
+
+    @RequestMapping(value ={ "/login"}, method = {RequestMethod.POST})
+    @ResponseBody
+    public ResponseEntity<?> login(@RequestBody Map<String, String> logindata) {
+
+        ResponseEntity<?> token = loginService.login(logindata);
+        return token;
     }
 
     @GetMapping("/faq")
@@ -108,22 +115,6 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/delete_faq"}, method = { RequestMethod.POST })
-    public int delete_faq(@RequestBody List<Integer> faqIds) {
-        return faqService.deleteFAQs(faqIds);
-    }
-
-
-    @RequestMapping(value = {"/faq_detail"} , method = { RequestMethod.GET })
-    public String detail_faq(@RequestParam(value = "faqId", required=false) Integer faqId) {
-        //System.out.println(faqId);
-        //faqService.detailFAQs();
-        //Optional<FAQ> faqOptional = faqRepository.findById(faqId);
-        //System.out.println(faqOptional);
-        return "faq_detail";
-    }
-
-    @ResponseBody
     @RequestMapping(value =  {"/delete_breed"}, method = {RequestMethod.POST})
     public  int delete_breed(@RequestBody List<Integer> breedIds){
         return breedService.deleteBreed(breedIds);
@@ -157,18 +148,41 @@ public class AdminController {
     public Optional detail_faq(@RequestParam("faqId") Integer faqId) {
         //System.out.println(faqId);
 
-        Optional<FAQ> faqOptional = faqRepository.findById(faqId);
-        //System.out.println(faqOptional);
-        return faqOptional;
-    }*/
-    /*@ResponseBody
-    @RequestMapping(value = {"/faq_detail"}, method = { RequestMethod.GET })
-    public int detail_faq(@RequestParam("faqId") Integer faqId, Optional<FAQ> faqOptional) {
-        //System.out.println(faqId);
-        // Integer faqId
+    //삭제버튼 누를시 db delete
+    @ResponseBody
+    @RequestMapping(value = {"/delete_faq"}, method = {RequestMethod.POST})
+    public int delete_faq(@RequestBody List<Integer> faqIds) {
+        return faqService.deleteFAQs(faqIds);
+    }
 
-        //System.out.println(faqOptional);
-        //return faqOptional;
-        return faqService.detailFAQs(faqId);
-    }*/
+    //수정 및 상세정보 페이지 띄우기
+    @RequestMapping(value = {"/faq_detail"}, method = {RequestMethod.GET})
+    public String detail_faq(@RequestParam(value = "faqId", required = false) Integer faqId,
+                             Model model) {
+        Optional<FAQ> faq_detailList = faqService.detailFAQs(faqId);
+        model.addAttribute("faq_detailList", faq_detailList);
+        return "faq_detail";
+    }
+
+    // 수정버튼 누를 시 입력되어있는 정보 db에 update
+    @ResponseBody
+    @RequestMapping(value = {"/update_faq"}, method = {RequestMethod.POST})
+    public int update_faq(@RequestBody FAQ faq_updateOp){
+        return faqService.updateFAQs(faq_updateOp);
+    }
+
+    //등록 미완성 로그인 구현 후 완성
+
+    //등록페이지 띄우기
+    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.GET})
+    public String insertPage_faq() {
+        return "faq_insert";
+    }
+
+    //등록버튼 누르면 db에 insert
+    @ResponseBody
+    @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.POST})
+    public int insert_faq(@RequestBody FAQ faq_insertOp){
+        return faqService.insertFAQs(faq_insertOp);
+    }
 }
