@@ -4,11 +4,13 @@ import com.example.PetProject.domain.*;
 import com.example.PetProject.repository.FaqRepository;
 import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,26 +23,47 @@ public class AdminController {
     private final BreedService breedService;
     private final MemberService memberService;
     private final LoginService loginService;
-
+    private final UserService userService;
 
     // 생성자를 통한 의존성 주입
     @Autowired
     public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService,
-                           BreedService breedService, MemberService memberService, LoginService loginService) {
+                           BreedService breedService, MemberService memberService, LoginService loginService, UserService userService) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
         this.breedService = breedService;
         this.memberService = memberService;
         this.loginService = loginService;
+        this.userService = userService;
     }
 
-    @RequestMapping(value ={ "/login"}, method = {RequestMethod.POST})
+    @RequestMapping(value = {"/login"}, method = {RequestMethod.POST})
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody Map<String, String> logindata) {
 
         ResponseEntity<?> token = loginService.login(logindata);
         return token;
+    }
+
+    // 회원가입 페이지 출력 요청 - GetMapping으로 출력 요청 -> PostMapping에서 form에 대한 action 수행
+    @GetMapping("/save")
+    public String saveForm() {
+        return "save";
+    }
+
+    @PostMapping("/save")
+    public String join(@ModelAttribute UserDTO userDTO) {
+        System.out.println("AdminController.save");
+        System.out.println("userDTO = " + userDTO);
+        userService.save(userDTO);
+
+        return "redirect:/index";
+    }
+
+    @GetMapping("/index")
+    public String indexpage() {
+        return "index";
     }
 
     @GetMapping("/faq")
@@ -65,7 +88,7 @@ public class AdminController {
     }
 
     @GetMapping("/breed")
-    public String breedpage(Model model){
+    public String breedpage(Model model) {
         List<Breed> breed_list = breedService.getReportedAndDeletedBreeds();
         model.addAttribute("breed_list", breed_list);
         return "breed";
@@ -78,17 +101,13 @@ public class AdminController {
         return "breed_view";
     }
 
-    @GetMapping("/index")
-    public String indexpage() {
-        return "redirect:/index.html";
-    }
-
     @GetMapping("/member")
     public String memberpage(Model model) {
         List<Member> member_list = memberService.getList();
         model.addAttribute("member_list", member_list);
         return "member";
     }
+
     @GetMapping("/manager")
     public String managerpage() {
         return "manager";
@@ -110,35 +129,38 @@ public class AdminController {
     }
 
     @GetMapping("/community")
-    public String communitypage(){
+    public String communitypage() {
         return "community";
     }
 
     @ResponseBody
-    @RequestMapping(value =  {"/delete_breed"}, method = {RequestMethod.POST})
-    public  int delete_breed(@RequestBody List<Integer> breedIds){
+    @RequestMapping(value = {"/delete_breed"}, method = {RequestMethod.POST})
+    public int delete_breed(@RequestBody List<Integer> breedIds) {
         return breedService.deleteBreed(breedIds);
     }
+
     @RequestMapping(value = {"/breed_view"}, method = {RequestMethod.GET})
-    public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds){
+    public String view_breed(@RequestParam(value = "breedIds", required = false) Integer breedIds) {
         return "breed_view";
     }
+
     @GetMapping("/breed_user")
     public String getBreedUserPage(Model model) {
         List<Breed> breedList = breedService.getAllBreeds()
-                                            .stream()
-                                            .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
-                                            .collect(Collectors.toList()); //null값 허용, 수정 허용
+                .stream()
+                .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
+                .collect(Collectors.toList()); //null값 허용, 수정 허용
         model.addAttribute("breed_list", breedList);
         return "breed_user";
     }
+
     @ResponseBody
     @GetMapping("/search")
     public List<Breed> searchBreeds(@RequestParam String query) {
         List<Breed> allBreeds = breedService.findAllBreeds()
-                                                .stream()
-                                                .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
-                                                .collect(Collectors.toList());
+                .stream()
+                .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
+                .collect(Collectors.toList());
         return allBreeds.stream()
                 .filter(breed -> breed.getTitle().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
@@ -185,4 +207,5 @@ public class AdminController {
     public int insert_faq(@RequestBody FAQ faq_insertOp){
         return faqService.insertFAQs(faq_insertOp);
     }
+     */
 }
