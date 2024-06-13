@@ -198,6 +198,8 @@
                         </tbody>
                     </table>
                 </div>
+                <button type="submit" onclick="deleteCheckBox()">삭제</button>
+                <button type="submit" onclick="location.href = '/insert_mem'">등록</button>
             </div>
         </div>
     </div>
@@ -256,6 +258,45 @@
         }
    });
 });
+    window.addEventListener('DOMContentLoaded', (event) => {
+    });
+
+    function allChecked(){
+        if($("#allCheckBox").is(':checked')){
+            $("input[name=memberIds]").prop("checked", true);
+        } else{
+            $("input[name=memberIds]").prop("checked", false);
+        }
+    }
+    function deleteCheckBox(){
+        var arr = new Array();
+
+        //선택된 체크박스의 id가져와서 배열에 값 집어넣기
+        $("input[name='memberIds']:checked").each(function() {
+            arr.push(parseInt($(this).attr('value')));
+        });
+
+        if(arr.length === 0){
+            alert("선택된 글이 없습니다.");
+        } else{
+            console.log(arr);
+            $.ajax({
+                type: "POST",
+                url: "/delete_mem",
+                contentType:"application/json",
+                data: JSON.stringify(arr),
+                dataType: "json",
+                success: function(deldata){
+                    if (deldata == 1) {
+                        location.href = '/member'  //삭제 성공시 리스트 새로고침
+                    }else {
+                        alert("삭제 실패하였습니다.");
+                    }
+                },
+                error: function(){alert("서버통신 오류");}
+            });
+        }
+    }
 </script>
 </body>
 </html>
