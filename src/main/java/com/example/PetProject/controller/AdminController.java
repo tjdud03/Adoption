@@ -121,6 +121,7 @@ public class AdminController {
         return memberService.insertMember(mem_insertOp);
     }
 
+    //회원 삭제
     @ResponseBody
     @RequestMapping(value = {"/delete_mem"}, method = {RequestMethod.POST})
     public int delete_mem(@RequestBody List<Integer> memberIds) {
@@ -135,6 +136,11 @@ public class AdminController {
     @GetMapping("/sponMain")
     public String sponMain() {
         return "sponMain";
+    }
+
+    @GetMapping("/spon")
+    public String sponMain() {
+        return "spon";
     }
 
     @GetMapping("/community")
