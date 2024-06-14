@@ -31,7 +31,7 @@ public class UserDTO {
         userDTO.setEmail(userEntity.getEmail());
         userDTO.setAdd_date(userEntity.getAdd_date());
         userDTO.setChange_date(userEntity.getChange_date());
-        userDTO.setMemType(userEntity.getMem_type());
+        userDTO.setMemType("user");
 
         return userDTO;
     }

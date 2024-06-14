@@ -108,24 +108,33 @@ public class AdminController {
         return "member";
     }
 
-    @GetMapping("/manager")
-    public String managerpage() {
-        return "manager";
+    //등록페이지 띄우기
+    @RequestMapping(value = {"/insert_mem"}, method = {RequestMethod.GET})
+    public String insertPage_mem() {
+        return "insert_mem";
     }
 
-    @GetMapping("/Isponsor")
-    public String isponsorpage() {
-        return "Isponsor";
+    //등록버튼 누르면 db에 insert
+    @ResponseBody
+    @RequestMapping(value = {"/insert_mem"}, method = {RequestMethod.POST})
+    public int insert_mem(@RequestBody Member mem_insertOp){
+        return memberService.insertMember(mem_insertOp);
     }
 
-    @GetMapping("/Lsponsor")
-    public String lsponsorpage() {
-        return "Lsponsor";
+    @ResponseBody
+    @RequestMapping(value = {"/delete_mem"}, method = {RequestMethod.POST})
+    public int delete_mem(@RequestBody List<Integer> memberIds) {
+        return memberService.deleteMember(memberIds);
     }
 
     @GetMapping("/sponsor")
     public String sponsor() {
         return "sponsor";
+    }
+
+    @GetMapping("/sponMain")
+    public String sponMain() {
+        return "sponMain";
     }
 
     @GetMapping("/community")

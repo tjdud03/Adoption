@@ -57,23 +57,16 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/member">
-                <span>사용자 관리</span>
-            </a>
-        </li>
-
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/sponsor" data-toggle="collapse" data-target="#collapseUtilities"
+            <a class="nav-link collapsed" href="/sponMain" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-                <span>후원 관리</span>
+                <span>후원</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/sponsor">후원</a>
+                    <a class="collapse-item" href="/spon">일시후원</a>
                     <a class="collapse-item" href="/#">증원</a>
                 </div>
             </div>
@@ -82,34 +75,34 @@
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/breed">
-                <span>게시글 관리</span>
+                <span>게시글</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/community">
-                <span>커뮤니티 관리</span>
+                <span>커뮤니티</span>
             </a>
         </li>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
             <a class="nav-link" href="/faq">
-                <span>입양상식 관리</span></a>
+                <span>입양상식</span></a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/banner">
-                <span>배너 관리</span>
+                <span>배너</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/question">
-                <span>문의 관리</span>
+                <span>문의</span>
             </a>
         </li>
 
@@ -150,43 +143,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">후원 관리</h1>
-                </div>
-
-                <!-- Content -->
-                <div class="row">
-                    <table id="myTable" class="display" style="width: 120%">
-                        <thead>
-                        <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
-                        <th>ID</th>
-                        <th>분류</th>
-                        <th>임시비밀번호</th>
-                        <th>후원금액</th>
-                        <th>후원기간</th>
-                        <th>은행명</th>
-                        <th>계좌번호</th>
-                        </thead>
-                        <tbody>
-                        <tr th:each="sponsor : ${spon_list}">
-                            <td><input type="checkbox" th:value="${sponsor.spon_id}" name="sponIds"
-                            /></td> <!-- 체크박스 -->
-                            <td th:text="${sponsor.spon_id}"></td>
-                            <td>
-                                <a th:text="${sponsor.name}" th:href="@{/spon_info(sponId=${sponsor.spon_id})}"></a>
-                            </td>
-                            <td th:text="${sponsor.pay}"></td>
-                            <td th:text="${sponsor.pay_date}"></td>
-                            <td th:text="${sponsor.bank}"></td>
-                            <td th:text="${sponsor.account}"></td>
-                            <td th:text="${sponsor.pw2}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button type="submit" onclick="deleteCheckBox()">삭제</button>
+                <a href="/spon">후원페이지 가기</a>
             </div>
         </div>
     </div>
@@ -245,45 +202,6 @@
         }
    });
 });
-    window.addEventListener('DOMContentLoaded', (event) => {
-    });
-
-    function allChecked(){
-        if($("#allCheckBox").is(':checked')){
-            $("input[name=sponIds]").prop("checked", true);
-        } else{
-            $("input[name=sponIds]").prop("checked", false);
-        }
-    }
-    function deleteCheckBox(){
-        var arr = new Array();
-
-        //선택된 체크박스의 id가져와서 배열에 값 집어넣기
-        $("input[name='sponIds']:checked").each(function() {
-            arr.push(parseInt($(this).attr('value')));
-        });
-
-        if(arr.length === 0){
-            alert("선택된 글이 없습니다.");
-        } else{
-            console.log(arr);
-            $.ajax({
-                type: "POST",
-                url: "/delete_spon",
-                contentType:"application/json",
-                data: JSON.stringify(arr),
-                dataType: "json",
-                success: function(deldata){
-                    if (deldata == 1) {
-                        location.href = '/member'  //삭제 성공시 리스트 새로고침
-                    }else {
-                        alert("삭제 실패하였습니다.");
-                    }
-                },
-                error: function(){alert("서버통신 오류");}
-            });
-        }
-    }
 </script>
 </body>
 </html>

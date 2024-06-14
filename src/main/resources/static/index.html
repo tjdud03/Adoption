@@ -11,14 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .login_box{
-            margin-left: 30%;
+            text-align:center;
         }
         .logo_img{
-            margin-left: 150px;
             vertical-align: middle;
         }
         .logo_text{
-            margin-left: 220px;
             margin-bottom: 50px;
             vertical-align: middle;
             font-weight: bold;
@@ -33,23 +31,28 @@
             margin-bottom: 22px;
             box-sizing: border-box;
         }
+        .signUp{
+            text-align:center;
+            margin-top: 30px;
+        }
+        .login_btn{
+            text-align:center;
+        }
         #login_btn{
             width: 500px;
             height: 62px;
             border-radius: 8px;
             font-size: 20px;
-            background-color: #D7EFE7;
+            background-color: #355ccd;
             border: none;
-
             cursor: pointer;
-            margin-left: 30%;
         }
     </style>
 </head>
 <body>
     <div class="login_box">
         <div class="logo_img">
-            <img class="logoImg" src="../logo.png" alt="로고" width="200px" height="200px">
+            <img class="logoImg" src="logo.png" alt="로고" width="200px" height="200px">
         </div>
         <div class="logo_text">
             <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
@@ -59,9 +62,11 @@
         </div>
         <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord를 입력하세요.">
     </div>
-    <button class="login_btn" id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
-    <div>
-        <a href="/save">회원가입</a>
+    <div class="login_btn">
+        <button id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
+    </div>
+    <div class="signUp">
+        <a href="/save" style="text-decoration: none;">회원가입</a>
     </div>
 <script>
     function login_exe(){
