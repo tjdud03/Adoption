@@ -143,9 +143,18 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/comm_user">
+            <a class="nav-link collapsed" href="/comm_user" data-toggle="collapse" data-target="#collapseUtilitiescom"
+               aria-expanded="true" aria-controls="collapseUtilitiescom">
                 <span>커뮤니티</span>
             </a>
+            <div id="collapseUtilitiescom" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/comm_user">Q&A</a>
+                    <a class="collapse-item" href="/breed_user">분양후기</a>
+                    <a class="collapse-item" href="/breed_user">자랑글</a>
+                </div>
+            </div>
         </li>
 
         <!-- Nav Item - Charts -->
@@ -191,7 +200,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">강아지 입양</h1>
+                    <h1 class="h3 mb-0 text-gray-800">고양이 입양</h1>
                     <div class="input-group ml-auto" style="max-width: 300px;">
                         <div class="form-outline">
                             <input type="search" id="search-input" class="form-control" placeholder="검색어 입력"/>
@@ -267,49 +276,49 @@
 
 
 <script>
-        $(document).ready(function () {
-            const searchButton = $('#search-button');
-            const searchInput = $('#search-input');
+    $(document).ready(function () {
+        const searchButton = $('#search-button');
+        const searchInput = $('#search-input');
 
-            function performSearch(){
-                const inputValue = searchInput.val();
+        function performSearch(){
+            const inputValue = searchInput.val();
 
-                $.ajax({
-                    url: '/search',
-                    type: 'GET',
-                    data: { query: inputValue },
-                    success: function (data) {
-                        const breedContainer = $('#breedContainer');
-                        breedContainer.empty();
+            $.ajax({
+                url: '/search_cat',
+                type: 'GET',
+                data: { query: inputValue },
+                success: function (data) {
+                    const breedContainer = $('#breedContainer');
+                    breedContainer.empty();
 
-                        data.forEach(breed => {
-                            const card = `
-                                <div class="col-3">
-                                    <div class="card" style="width: 18rem;">
-                                        <img src="${breed.img}" class="card-img-top" alt="Breed Image">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${breed.title}</h5>
-                                            <p class="card-text">${breed.content}</p>
-                                            <a href="/breed/view/${breed.breedId}" class="btn btn-primary">보기</a>
-                                        </div>
+                    data.forEach(breed => {
+                        const card = `
+                            <div class="col-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="${breed.img}" class="card-img-top" alt="Breed Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${breed.title}</h5>
+                                        <p class="card-text">${breed.content}</p>
+                                        <a href="/breed/view/${breed.breedId}" class="btn btn-primary">보기</a>
                                     </div>
-                                </div>`;
-                            breedContainer.append(card);
-                        });
-                    },
-                    error: function (error) {
-                        console.error('Error:', error);
-                    }
-                  });
+                                </div>
+                            </div>`;
+                        breedContainer.append(card);
+                    });
+                },
+                error: function (error) {
+                    console.error('Error:', error);
                 }
-                searchButton.on('click', performSearch);
+              });
+            }
+            searchButton.on('click', performSearch);
 
-               searchInput.on('keypress', function (e) {
-                  if (e.which === 13) { // Enter key pressed
-                    performSearch();
-                }
-            });
+           searchInput.on('keypress', function (e) {
+              if (e.which === 13) { // Enter key pressed
+                performSearch();
+            }
         });
+    });
 </script>
 </body>
 </html>

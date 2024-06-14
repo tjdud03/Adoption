@@ -96,7 +96,7 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="/comm">
+            <a class="nav-link" href="/community">
                 <span>커뮤니티 관리</span>
             </a>
         </li>
@@ -161,7 +161,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">게시글 관리</h1>
+                    <h1 class="h3 mb-0 text-gray-800">커뮤니티 관리</h1>
                 </div>
 
                 <!-- Content -->
@@ -170,33 +170,32 @@
                         <thead>
                         <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
                         <th>No.</th>
-                        <th>품종</th>
                         <th>상태</th>
                         <th>제목</th>
                         <th>등록자</th>
                         <th>등록일</th>
                         <th>수정일</th>
                         </thead>
-            <tbody>
-            <tr th:each="breed : ${breed_list}">
-                <td><input type="checkbox" th:value="${breed.breed_id}" name="breedIds"/></td>
-                <td th:text="${breed.breed_id}"></td>
-                <td th:text="${breed.breed}"></td>
-                <td th:text="${breed.state}"></td>
-                    <td><a th:text="${breed.title}" th:href="@{/breed_view(breedId=${breed.breed_id})}"></a>
-                </td>
-                <td th:text="${breed.member_id}"></td>
-                <td th:text="${breed.add_date}"></td>
-                <td th:text="${breed.change_date}"></td>
-            </tr>
-             </tbody>
-                 </table>
+                        <tbody>
+                        <tr th:each="community : ${commu_list}">
+                            <td><input type="checkbox" th:value="${community.commu_id}" name="commIds"/></td>
+                            <td th:text="${community.commu_id}"></td>
+                            <td th:text="${community.state}"></td>
+                            <td>
+                                <a th:text="${community.title}" th:href="@{/comm_info(commId=${community.commu_id})}"></a>
+                            </td>
+                            <td th:text="${community.member_id}"></td>
+                            <td th:text="${community.add_date}"></td>
+                            <td th:text="${community.change_date}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                     <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
-                    <button type="submit" class="btn_c btnS" onclick="location.href = '/insert_breed'">등록</button>
+                    <button type="submit" class="btn_c btnS" onclick="location.href = '/insert_comm'">등록</button>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </div>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
@@ -214,24 +213,17 @@
     }
 
 
-/*
-    function viewDetails(checkbox) {
-    const breedId = checkbox.value;
-    window.location.href = `/breed/view/${breedId}`;
-    }
-*/
-
     function allChecked(){
         if($("#allCheckBox").is(':checked')){
-            $("input[name=breedIds]").prop("checked", true);
+            $("input[name=commIds]").prop("checked", true);
         } else{
-            $("input[name=breedIds]").prop("checked", false);
+            $("input[name=commIds]").prop("checked", false);
         }
     }
 
         function deleteCheckBox(){
         var arr = new Array();
-        $("input[name='breedIds']:checked").each(function() {
+        $("input[name='commIds']:checked").each(function() {
             arr.push(parseInt($(this).attr('value')));
         });
         if(arr.length === 0){
@@ -240,13 +232,13 @@
             if (confirm("삭제하시겠습니까?")) {
             $.ajax({
                 type: "POST",
-                url: "/delete_breed",
+                url: "/delete_comm",
                 contentType:"application/json",
                 data: JSON.stringify(arr),
                 dataType: "json",
                 success: function(deldata){
                     if (deldata == 1) {
-                        location.href = '/breed'  //삭제 성공시 리스트 새로고침
+                        location.href = '/comm'  //삭제 성공시 리스트 새로고침
                     }
                     else {
                         alert("삭제 실패하였습니다.");

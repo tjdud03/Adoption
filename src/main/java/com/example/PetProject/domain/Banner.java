@@ -21,7 +21,7 @@ public class Banner {
     @Column(name = "title", length = 255)
     private String title;
 
-    @Column(name = "static/img", length = 255)
+    @Column(name = "img", length = 255)
     private String img;
 
     @Column(name = "add_date", length = 50)

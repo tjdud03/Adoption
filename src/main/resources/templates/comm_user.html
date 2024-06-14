@@ -87,51 +87,35 @@
             </div>
         </li>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="/breed">
-                <span>게시글 관리</span>
+            <a class="nav-link collapsed" href="/breed_user" data-toggle="collapse" data-target="#collapseUtilitiesbreed"
+               aria-expanded="true" aria-controls="collapseUtilitiesbreed">
+                <span>입양 게시글</span>
+            </a>
+            <div id="collapseUtilitiesbreed" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/breed_user">강아지</a>
+                    <a class="collapse-item" href="/breed_user_cat">고양이</a>
+                    <a class="collapse-item" href="/breed_user_ex">그 외</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/comm_user">
+                <span>커뮤니티</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="/comm">
-                <span>커뮤니티 관리</span>
+            <a class="nav-link" href="#">
+                <span>입양상식</span>
             </a>
         </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="/faq">
-                <span>입양상식 관리</span></a>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/banner">
-                <span>배너 관리</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/question">
-                <span>문의 관리</span>
-            </a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
+        <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
@@ -161,7 +145,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">게시글 관리</h1>
+                    <h1 class="h3 mb-0 text-gray-800">커뮤니티</h1>
                 </div>
 
                 <!-- Content -->
@@ -169,94 +153,87 @@
                     <table id="myTable" class="display" style="width: 120%">
                         <thead>
                         <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
-                        <th>No.</th>
-                        <th>품종</th>
-                        <th>상태</th>
+                        <th>ID</th>
                         <th>제목</th>
-                        <th>등록자</th>
+                        <th>내용</th>
                         <th>등록일</th>
                         <th>수정일</th>
+                        <th>등록자</th>
                         </thead>
-            <tbody>
-            <tr th:each="breed : ${breed_list}">
-                <td><input type="checkbox" th:value="${breed.breed_id}" name="breedIds"/></td>
-                <td th:text="${breed.breed_id}"></td>
-                <td th:text="${breed.breed}"></td>
-                <td th:text="${breed.state}"></td>
-                    <td><a th:text="${breed.title}" th:href="@{/breed_view(breedId=${breed.breed_id})}"></a>
-                </td>
-                <td th:text="${breed.member_id}"></td>
-                <td th:text="${breed.add_date}"></td>
-                <td th:text="${breed.change_date}"></td>
-            </tr>
-             </tbody>
-                 </table>
-                    <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
-                    <button type="submit" class="btn_c btnS" onclick="location.href = '/insert_breed'">등록</button>
+                        <tbody>
+                        <tr th:each="community : ${commu_list}">
+                            <td><input type="checkbox" th:value="${community.commu_id}" name="commIds"
+                            /></td> <!-- 체크박스 -->
+                            <td th:text="${community.commu_id}"></td>
+                            <td>
+                                <a th:text="${community.title}" th:href="@{/comm_info(commId=${community.commu_id})}"></a>
+                            </td>
+                            <td th:text="${community.content}"></td>
+                            <td th:text="${community.add_date}"></td>
+                            <td th:text="${community.change_date}"></td>
+                            <td th:text="${community.member_id}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- /.container-fluid -->
+
 </div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span></span>
+        </div>
+    </div>
+</footer>
+<!-- End of Footer -->
+
 </div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      openNav();
-    });
-
-    function openNav() {
-      document.getElementById("menu").style.width = "200px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
-
-    function closeNav() {
-      document.getElementById("menu").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
-    }
-
-
-/*
-    function viewDetails(checkbox) {
-    const breedId = checkbox.value;
-    window.location.href = `/breed/view/${breedId}`;
-    }
-*/
-
-    function allChecked(){
-        if($("#allCheckBox").is(':checked')){
-            $("input[name=breedIds]").prop("checked", true);
-        } else{
-            $("input[name=breedIds]").prop("checked", false);
+    $(document).ready(function (){
+        $('#myTable').DataTable({
+            language: {
+                search: "검색어 입력:  "
         }
-    }
-
-        function deleteCheckBox(){
-        var arr = new Array();
-        $("input[name='breedIds']:checked").each(function() {
-            arr.push(parseInt($(this).attr('value')));
-        });
-        if(arr.length === 0){
-            alert("선택된 글이 없습니다.");
-        } else{
-            if (confirm("삭제하시겠습니까?")) {
-            $.ajax({
-                type: "POST",
-                url: "/delete_breed",
-                contentType:"application/json",
-                data: JSON.stringify(arr),
-                dataType: "json",
-                success: function(deldata){
-                    if (deldata == 1) {
-                        location.href = '/breed'  //삭제 성공시 리스트 새로고침
-                    }
-                    else {
-                        alert("삭제 실패하였습니다.");
-                    }
-                },
-                error: function(){alert("서버통신 오류");}
-            });
-        }
-    }
-}
+   });
+});
 </script>
 </body>
 </html>

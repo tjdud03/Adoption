@@ -87,50 +87,35 @@
             </div>
         </li>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/breed">
                 <span>게시글 관리</span>
             </a>
         </li>
 
-        <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/comm">
-                <span>커뮤니티 관리</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="/faq">
-                <span>입양상식 관리</span></a>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/banner">
-                <span>배너 관리</span>
+                <span>커뮤니티</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="/question">
-                <span>문의 관리</span>
+            <a class="nav-link" href="#">
+                <span>입양상식</span>
             </a>
         </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span>배너관리</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span>문의관리</span>
+            </a>
+        </li>
     </ul>
-    <!-- End of Sidebar -->
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -157,106 +142,71 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
-
+            <div class="container">
+                <div id="uploadModal">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">게시글 관리</h1>
+                    <h1 class="h3 mb-0 text-gray-800">게시글 작성</h1>
                 </div>
-
-                <!-- Content -->
-                <div class="row">
-                    <table id="myTable" class="display" style="width: 120%">
-                        <thead>
-                        <th><input type="checkbox" id="allCheckBox" onclick="allChecked();"/>전체 선택</th> <!-- 체크박스 -->
-                        <th>No.</th>
-                        <th>품종</th>
-                        <th>상태</th>
-                        <th>제목</th>
-                        <th>등록자</th>
-                        <th>등록일</th>
-                        <th>수정일</th>
-                        </thead>
-            <tbody>
-            <tr th:each="breed : ${breed_list}">
-                <td><input type="checkbox" th:value="${breed.breed_id}" name="breedIds"/></td>
-                <td th:text="${breed.breed_id}"></td>
-                <td th:text="${breed.breed}"></td>
-                <td th:text="${breed.state}"></td>
-                    <td><a th:text="${breed.title}" th:href="@{/breed_view(breedId=${breed.breed_id})}"></a>
-                </td>
-                <td th:text="${breed.member_id}"></td>
-                <td th:text="${breed.add_date}"></td>
-                <td th:text="${breed.change_date}"></td>
-            </tr>
-             </tbody>
-                 </table>
-                    <button type="submit" class="btn_d btnS" onclick="deleteCheckBox()">삭제</button>
-                    <button type="submit" class="btn_c btnS" onclick="location.href = '/insert_breed'">등록</button>
+            <form id="breed_insertForm">
+                <div class="breed_write">
+                    <label for="title">제목</label>
+                    <textarea id="title" name="title" class="title"></textarea></td>
+                </div>
+                <div class="breed_write">
+                    <label for="breed">종류</label>
+                    <textarea id="breed" name="breed" class="breed"></textarea> <!--option 변경으로 수정-->
+                </div>
+                <div class="breed_write">
+                    <label for="content">내용</label>
+                    <textarea id="contents" name="contents" class="contents"></textarea>
+                </div>
+                <div class="buttons">
+                    <div class="buttons-left">
+                        <button type="submit" class="btn_insert" onclick="insert_breed()">등록</button>
+                    </div>
+            </form>
                 </div>
             </div>
         </div>
+
 </div>
 </div>
 <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      openNav();
-    });
-
-    function openNav() {
-      document.getElementById("menu").style.width = "200px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
-
-    function closeNav() {
-      document.getElementById("menu").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
-    }
+    function insert_breed(){
+            let title = $("#title").val();
+            let content = $("#contents").val();
+            let breed = $("#breed").val();
+            let member_id = localStorage.getItem('memberId');
 
 
-/*
-    function viewDetails(checkbox) {
-    const breedId = checkbox.value;
-    window.location.href = `/breed/view/${breedId}`;
-    }
-*/
+            let InsertData = {
+                "member_id": member_id,
+                "title": title,
+                "content": content,
+                "breed": breed
+            }
 
-    function allChecked(){
-        if($("#allCheckBox").is(':checked')){
-            $("input[name=breedIds]").prop("checked", true);
-        } else{
-            $("input[name=breedIds]").prop("checked", false);
-        }
-    }
 
-        function deleteCheckBox(){
-        var arr = new Array();
-        $("input[name='breedIds']:checked").each(function() {
-            arr.push(parseInt($(this).attr('value')));
-        });
-        if(arr.length === 0){
-            alert("선택된 글이 없습니다.");
-        } else{
-            if (confirm("삭제하시겠습니까?")) {
             $.ajax({
                 type: "POST",
-                url: "/delete_breed",
+                url: "/insert_breed",
                 contentType:"application/json",
-                data: JSON.stringify(arr),
                 dataType: "json",
-                success: function(deldata){
-                    if (deldata == 1) {
-                        location.href = '/breed'  //삭제 성공시 리스트 새로고침
+                data: JSON.stringify(InsertData),
+                success: function(res){
+                    if (res === 0) {
+                        alert("등록 되었습니다.");
+                        location.href='/breed';
+                    }else {
+                        alert("등록 실패하였습니다.");
                     }
-                    else {
-                        alert("삭제 실패하였습니다.");
-                    }
+
                 },
                 error: function(){alert("서버통신 오류");}
-            });
+            })
         }
-    }
-}
+
 </script>
 </body>
 </html>

@@ -1,12 +1,11 @@
-package com.example.PetProject.repository;
+    package com.example.PetProject.repository;
 
-import com.example.PetProject.domain.Breed;
-import org.springframework.data.jpa.repository.JpaRepository;
+    import com.example.PetProject.domain.Breed;
+    import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+    import java.util.List;
 
-public interface BreedRepository extends JpaRepository<Breed, Integer> {
-    List<Breed> findByStateIn(List<String> list);
+    public interface BreedRepository extends JpaRepository<Breed, Integer> {
+        List<Breed> findByStateIn(List<String> list);
+    }
 
-    List<Breed> findByStateIsNull();
-}
