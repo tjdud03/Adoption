@@ -1,5 +1,6 @@
-package com.example.PetProject.domain;
+package com.example.PetProject.entity;
 
+import com.example.PetProject.domain.UserDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Member", catalog = "pet_data")
-public class Member {
-
+@Table(name = "member", catalog = "pet_data")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", nullable = false)
@@ -42,21 +42,22 @@ public class Member {
     @Column(name = "mem_type", length = 10)
     private String mem_type;
 
-    /*@OneToMany(mappedBy = "member", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<Board> board = new ArrayList<>();*/
-
-    //빌더
     @Builder
-    public Member(Integer member_id, String name, String pw, String phone, String birth, String email,
-                  String add_date, String change_date, String mem_type) {
-        this.member_id = member_id;
-        this.name = name;
-        this.pw = pw;
-        this.phone = phone;
-        this.birth = birth;
-        this.email = email;
-        this.add_date = add_date;
-        this.change_date = change_date;
-        this.mem_type = mem_type;
+    public static UserEntity toUserEntity(UserDTO userDTO){
+        UserEntity userEntity = new UserEntity();
+
+        if (userDTO.getMember_id() != null) {
+            userEntity.member_id = Integer.valueOf(userDTO.getMember_id());
+        }
+        userEntity.name = userDTO.getName();
+        userEntity.pw = userDTO.getPw();
+        userEntity.phone = userDTO.getPhone();
+        userEntity.birth = userDTO.getBirth();
+        userEntity.email = userDTO.getEmail();
+        userEntity.add_date = userDTO.getAdd_date();
+        userEntity.change_date = userDTO.getChange_date();
+        userEntity.mem_type = userDTO.getMemType();
+
+        return userEntity;
     }
 }

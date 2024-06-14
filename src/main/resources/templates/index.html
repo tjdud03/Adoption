@@ -50,24 +50,24 @@
     </style>
 </head>
 <body>
-    <div class="login_box">
-        <div class="logo_img">
-            <img class="logoImg" src="logo.png" alt="로고" width="200px" height="200px">
-        </div>
-        <div class="logo_text">
-            <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
-        </div>
-        <div>
-            <input class="idpw" type="text" id="email" name="email" placeholder="Email을 입력하세요.">
-        </div>
-        <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord를 입력하세요.">
+<div class="login_box">
+    <div class="logo_img">
+        <img class="logoImg" src="logo.png" alt="로고" width="200px" height="200px">
     </div>
-    <div class="login_btn">
-        <button id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
+    <div class="logo_text">
+        <span class=logoText style="font-size:30px;margin-top:20px;"> US2</span>
     </div>
-    <div class="signUp">
-        <a href="/save" style="text-decoration: none;">회원가입</a>
+    <div>
+        <input class="idpw" type="text" id="email" name="email" placeholder="Email을 입력하세요.">
     </div>
+    <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord를 입력하세요.">
+</div>
+<div class="login_btn">
+    <button id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
+</div>
+<div class="signUp">
+    <a href="/save" style="text-decoration: none;">회원가입</a>
+</div>
 <script>
     function login_exe(){
         let input_email = $("#email").val();
