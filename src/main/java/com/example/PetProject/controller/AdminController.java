@@ -121,6 +121,10 @@ public class AdminController {
         return memberService.insertMember(mem_insertOp);
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/delete_mem"}, method = {RequestMethod.POST})
+    public int delete_mem(@RequestBody List<Integer> memberIds) {
+        return memberService.deleteMember(memberIds);
     //회원 삭제
     @ResponseBody
     @RequestMapping(value = {"/delete_mem"}, method = {RequestMethod.POST})
