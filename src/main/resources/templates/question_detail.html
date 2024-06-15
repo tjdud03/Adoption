@@ -12,8 +12,8 @@
         margin-top: 5%;
         margin-right: 10%;
         margin-left: 2%;
-        width: 70px;
-        height: 40px;
+        width: 110px;
+        height: 50px;
         border-radius: 10px;
         border: 0;
         outline: 0;
@@ -43,8 +43,8 @@
     }
 
     .contents {
-        width: 80%;
-        height: 13em;
+        width: 90%;
+        height: 100px;
         border: none;
         resize: none;
         font-size: 20px;
@@ -224,78 +224,102 @@
             </nav>
             <!-- End of Topbar -->
             <div id="table" class="list">
-                <h1 style="font-size: 20px; ">입양상식관리 상세페이지</h1>
+                <h1 style="font-size: 20px; ">문의관리 상세페이지</h1>
                 <table class="table">
                     <tr>
                         <td class="content_title">ID</td>
-                        <td class="input_box" id="ID_faq"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''}"></td>
+                        <td class="input_box" id="ID_Q"
+                            th:text="${question_detailList.get().q_id}"></td>
+
                         <td class="content_title">등록자</td>
-                        <td id="admin_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().member_id : ''}"></td>
+                        <td id="admin_Q" name="title" class="input_box"
+                            th:text="${question_detailList.get().member_id}"></td>
 
                     </tr>
                     <tr>
                         <td class="content_title">등록일</td>
-                        <td id="addDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().add_date : ''}"></td>
+                        <td id="addDate_Q" name="title" class="input_box"
+                            th:text="${question_detailList.get().add_date}"></td>
                         <td class="content_title">수정일</td>
-                        <td id="changeDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().change_date : ''}"></td>
-
-                    </tr>
-                    <tr>
-                        <td class="content_title">제목</td>
-                        <td colspan="3">
-                    <textarea id="title_faq" name="title" class="txtarea"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().title : ''}"
-                              th:href="@{/faq_detail(faqId=${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''})}"></textarea>
-                        </td>
+                        <td id="changeDate_Q" name="title" class="input_box"
+                            th:text="${question_detailList.get().change_date}"></td>
                     </tr>
                     <tr>
                         <td class="content_title">내용</td>
-                        <td colspan="3">
-                    <textarea id="contents_faq" name="contents" class="contents"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().content : ''}"></textarea>
+                        <td colspan="4">
+                            <textarea id="contents_Q" name="contents" class="contents"
+                                      th:text="${question_detailList.get().content}"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="content_title">답변id</td>
+                        <td id="ID_A" name="title" class="input_box"
+                            th:text="${answer_detailList.get().a_id}"></td>
+                        <td class="content_title">답변자</td>
+                        <td id="member_A" name="title" class="input_box"
+                            th:text="${answer_detailList.get().member_id}"></td>
+                        <td class="content_title">답변 및 수정일</td>
+                        <td id="addDate_A" name="title" class="input_box"
+                            th:text="${answer_detailList.get().change_date}"></td>
+                    </tr>
+                    <tr>
+                        <td class="content_title">답변</td>
+                        <td colspan="4">
+                            <textarea id="answer_A" name="answer" class="contents"
+                                      th:text="${answer_detailList.get().content}"></textarea>
                         </td>
                     </tr>
                 </table>
                 <div class="btn_position">
-                    <button type="submit" class="btnS" onclick="updateFaq()">수정</button>
+                    <button type="submit" class="btnS" onclick="updateQ()">수정 및 답변</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    function updateFaq() {
-        let faq_id = $("#ID_faq").text();
-        let member_id = $("#admin_faq").text();
-        let add_date = $("#addDate_faq").text();
-        let change_date = $("#changeDate_faq").text();
-        let title = $("#title_faq").val();
-        let content = $("#contents_faq").val();
+    function updateQ() {
+        let q_id = $("#ID_Q").text();
+        let member_id = $("#admin_Q").text();
+        let add_date = $("#addDate_Q").text();
+        let change_date = $("#changeDate_Q").text();
+        let content = $("#contents_Q").val();
+        let a_id = $("#ID_A").text();
+        let member_A = $("#member_A").text();
+        let addDate_A = $("#addDate_A").text();
+        let answer_A = $("#answer_A").val();
 
 
-        let UpdateData = {
-            "faq_id": faq_id,
+        let UpdateQ_D = {
+            "q_id": q_id,
             "member_id": member_id,
             "add_date": add_date,
             "change_date": change_date,
-            "title": title,
-            "content": content
+            "content": content,
+
         }
+        let UpdateA_D = {
+            "a_id": a_id,
+            "member_id": member_A,
+            "add_answerdate": addDate_A,
+            "content" : answer_A
+        }
+
+        let requestData = {
+            questionData: UpdateQ_D,
+            answerData: UpdateA_D
+        };
 
         $.ajax({
             type: "POST",
-            url: "/update_faq",
+            url: "/update_Q",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(UpdateData),
+            data: JSON.stringify(requestData),
             success: function (updata) {
                 if (updata === 0) {
                     alert("수정 되었습니다.");
-                    location.href = '/faq';
+                    location.href = '/question';
                 } else {
                     alert("수정 실패하였습니다.");
                 }
@@ -304,9 +328,10 @@
             error: function () {
                 alert("서버통신 오류");
             }
-
         })
     }
+
+
 
 </script>
 </body>

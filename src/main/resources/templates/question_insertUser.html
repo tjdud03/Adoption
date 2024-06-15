@@ -21,12 +21,8 @@
     }
 
     .content_title {
-        width: 50px;
+        width: 80px;
         text-align: center;
-    }
-
-    .input_box {
-        width: 150px;
     }
 
     .txtarea {
@@ -43,7 +39,7 @@
     }
 
     .contents {
-        width: 80%;
+        width: 97%;
         height: 13em;
         border: none;
         resize: none;
@@ -67,8 +63,6 @@
         float: right;
     }
 </style>
-
-
 <head>
 
     <meta charset="utf-8">
@@ -124,25 +118,11 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/member" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <span>사용자 관리</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/member">회원</a>
-                    <a class="collapse-item" href="/manager">관리자</a>
-                </div>
-            </div>
-        </li>
-
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="/sponsor" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-                <span>후원 관리</span>
+                <span>후원</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
@@ -157,34 +137,27 @@
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/breed">
-                <span>게시글 관리</span>
+                <span>게시글</span>
             </a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/community">
-                <span>커뮤니티 관리</span>
+                <span>커뮤니티</span>
             </a>
         </li>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
             <a class="nav-link" href="/faq">
-                <span>입양상식 관리</span></a>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/banner">
-                <span>배너 관리</span>
-            </a>
+                <span>입양상식</span></a>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="/question">
-                <span>문의 관리</span>
+                <span>문의</span>
             </a>
         </li>
 
@@ -223,91 +196,76 @@
                 </ul>
             </nav>
             <!-- End of Topbar -->
-            <div id="table" class="list">
-                <h1 style="font-size: 20px; ">입양상식관리 상세페이지</h1>
-                <table class="table">
-                    <tr>
-                        <td class="content_title">ID</td>
-                        <td class="input_box" id="ID_faq"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''}"></td>
-                        <td class="content_title">등록자</td>
-                        <td id="admin_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().member_id : ''}"></td>
 
-                    </tr>
-                    <tr>
-                        <td class="content_title">등록일</td>
-                        <td id="addDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().add_date : ''}"></td>
-                        <td class="content_title">수정일</td>
-                        <td id="changeDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().change_date : ''}"></td>
-
-                    </tr>
-                    <tr>
-                        <td class="content_title">제목</td>
-                        <td colspan="3">
-                    <textarea id="title_faq" name="title" class="txtarea"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().title : ''}"
-                              th:href="@{/faq_detail(faqId=${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''})}"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="content_title">내용</td>
-                        <td colspan="3">
-                    <textarea id="contents_faq" name="contents" class="contents"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().content : ''}"></textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btn_position">
-                    <button type="submit" class="btnS" onclick="updateFaq()">수정</button>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div id="table" class="list">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">문의하기</h1>
+                    </div>
+                    <!-- Content -->
+                    <div class="row">
+                        <!--<table id="myTable" class="display" style="width: 120%">-->
+                        <table class="table">
+                            <tr>
+                                <td class="content_title">내용</td>
+                                <td colspan="3">
+                                    <textarea id="contents_question" name="contents" class="contents"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="btn_position">
+                        <button type="submit" class="btn_c btnS" onclick="insert_Faq()">등록</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    function updateFaq() {
-        let faq_id = $("#ID_faq").text();
-        let member_id = $("#admin_faq").text();
-        let add_date = $("#addDate_faq").text();
-        let change_date = $("#changeDate_faq").text();
-        let title = $("#title_faq").val();
-        let content = $("#contents_faq").val();
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            language: {
+                search: "검색어 입력:  "
+            }
+        });
+    });
+
+    function insert_Faq() {
+
+        let content = $("#contents_question").val();
+        let member_id = localStorage.getItem('memberId');
 
 
-        let UpdateData = {
-            "faq_id": faq_id,
+        let InsertData = {
             "member_id": member_id,
-            "add_date": add_date,
-            "change_date": change_date,
-            "title": title,
             "content": content
         }
 
+
         $.ajax({
             type: "POST",
-            url: "/update_faq",
+            url: "/insert_question",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(UpdateData),
-            success: function (updata) {
-                if (updata === 0) {
-                    alert("수정 되었습니다.");
-                    location.href = '/faq';
+            data: JSON.stringify(InsertData),
+            success: function (res) {
+                if (res === 0) {
+                    alert("등록 되었습니다.");
+                    location.href = '/questionUser';
                 } else {
-                    alert("수정 실패하였습니다.");
+                    alert("등록 실패하였습니다.");
                 }
 
             },
             error: function () {
                 alert("서버통신 오류");
             }
-
         })
     }
-
 </script>
 </body>
 </html>

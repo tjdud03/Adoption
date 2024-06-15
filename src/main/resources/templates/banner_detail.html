@@ -224,78 +224,77 @@
             </nav>
             <!-- End of Topbar -->
             <div id="table" class="list">
-                <h1 style="font-size: 20px; ">입양상식관리 상세페이지</h1>
+                <h1 style="font-size: 20px; ">배너관리 상세페이지</h1>
                 <table class="table">
                     <tr>
                         <td class="content_title">ID</td>
-                        <td class="input_box" id="ID_faq"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''}"></td>
+                        <td class="input_box" id="ID_banner"
+                            th:text="${banner_detailList.isPresent() ? banner_detailList.get().banner_id : ''}"></td>
                         <td class="content_title">등록자</td>
-                        <td id="admin_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().member_id : ''}"></td>
+                        <td id="admin_banner" name="title" class="input_box"
+                            th:text="${banner_detailList.isPresent() ? banner_detailList.get().member_id : ''}"></td>
 
                     </tr>
                     <tr>
                         <td class="content_title">등록일</td>
-                        <td id="addDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().add_date : ''}"></td>
+                        <td id="addDate_banner" name="title" class="input_box"
+                            th:text="${banner_detailList.isPresent() ? banner_detailList.get().add_date : ''}"></td>
                         <td class="content_title">수정일</td>
-                        <td id="changeDate_faq" name="title" class="input_box"
-                            th:text="${faq_detailList.isPresent() ? faq_detailList.get().change_date : ''}"></td>
-
+                        <td id="changeDate_banner" name="title" class="input_box"
+                            th:text="${banner_detailList.isPresent() ? banner_detailList.get().change_date : ''}"></td>
                     </tr>
                     <tr>
                         <td class="content_title">제목</td>
                         <td colspan="3">
-                    <textarea id="title_faq" name="title" class="txtarea"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().title : ''}"
-                              th:href="@{/faq_detail(faqId=${faq_detailList.isPresent() ? faq_detailList.get().faq_id : ''})}"></textarea>
+                            <textarea id="title_banner" name="title" class="txtarea"
+                                      th:text="${banner_detailList.isPresent() ? banner_detailList.get().title : ''}"
+                                      th:href="@{/banner_detail(faqId=${banner_detailList.isPresent() ? banner_detailList.get().banner_id : ''})}"></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td class="content_title">내용</td>
+                        <td class="content_title">이미지</td>
                         <td colspan="3">
-                    <textarea id="contents_faq" name="contents" class="contents"
-                              th:text="${faq_detailList.isPresent() ? faq_detailList.get().content : ''}"></textarea>
+                            <textarea id="img_banner" name="contents" class="contents"
+                              th:text="${banner_detailList.isPresent() ? banner_detailList.get().img : ''}"></textarea>
                         </td>
                     </tr>
                 </table>
                 <div class="btn_position">
-                    <button type="submit" class="btnS" onclick="updateFaq()">수정</button>
+                    <button type="submit" class="btnS" onclick="updateBanner()">수정</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    function updateFaq() {
-        let faq_id = $("#ID_faq").text();
-        let member_id = $("#admin_faq").text();
-        let add_date = $("#addDate_faq").text();
-        let change_date = $("#changeDate_faq").text();
-        let title = $("#title_faq").val();
-        let content = $("#contents_faq").val();
+    function updateBanner() {
+        let banner_id = $("#ID_banner").text();
+        let member_id = $("#admin_banner").text();
+        let add_date = $("#addDate_banner").text();
+        let change_date = $("#changeDate_banner").text();
+        let title = $("#title_banner").val();
+        let img = $("#img_banner").val();
 
 
         let UpdateData = {
-            "faq_id": faq_id,
+            "banner_id": banner_id,
             "member_id": member_id,
             "add_date": add_date,
             "change_date": change_date,
             "title": title,
-            "content": content
+            "img": img
         }
 
         $.ajax({
             type: "POST",
-            url: "/update_faq",
+            url: "/update_banner",
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(UpdateData),
             success: function (updata) {
                 if (updata === 0) {
                     alert("수정 되었습니다.");
-                    location.href = '/faq';
+                    location.href = '/banner';
                 } else {
                     alert("수정 실패하였습니다.");
                 }

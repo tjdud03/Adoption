@@ -38,11 +38,12 @@
             height: 62px;
             border-radius: 8px;
             font-size: 20px;
-            background-color: #D7EFE7;
+            background-color: #4e73df;
             border: none;
-
             cursor: pointer;
             margin-left: 30%;
+            font-weight: bold;
+            color: white;
         }
     </style>
 </head>
@@ -59,7 +60,7 @@
         </div>
         <input class="idpw" type="password" id="pw" name="pw" placeholder="PassWord를 입력하세요.">
     </div>
-    <button class="login_btn" id="login_btn" type="submit" onclick="login_exe()">LOGIN</button>
+    <input class="login_btn" id="login_btn" type="submit" value="LOGIN" onclick="login_exe()"></input>
 <script>
     function login_exe(){
         let input_email = $("#email").val();
@@ -80,8 +81,22 @@
                 if(res.accessToken != null){
                     localStorage.setItem('memberId', res.sessionData.memberId);
                     localStorage.setItem('memType', res.sessionData.memType);
-                    location.href = '/member';
+                    if(localStorage.getItem('memType') === "admin"){
+                        let prompt_where = prompt("관리자페이지면 admin, 사용자페이지면 user를 입력하세요");
+                        let where = String(prompt_where);
+                        if(where === "admin"){
+                            location.href = '/member';
+                        }else if(where === "user"){
+                            location.href = '/faqUser'
+                        }else{
+                            alert("잘못 입력하셨습니다");
+                        }
+                    }else if(localStorage.getItem('memType') === "user"){
+                        location.href = '/faqUser';
+                    }
+
                 }
+
             },
             error: function(xhr, status, error) {
                 // 오류 발생한 경우

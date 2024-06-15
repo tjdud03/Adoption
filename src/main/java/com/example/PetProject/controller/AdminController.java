@@ -1,6 +1,7 @@
 package com.example.PetProject.controller;
 
 import com.example.PetProject.domain.*;
+import com.example.PetProject.repository.AnswerRepository;
 import com.example.PetProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 
 @Controller
 public class AdminController {
@@ -26,7 +27,7 @@ public class AdminController {
     // 생성자를 통한 의존성 주입
     @Autowired
     public AdminController(FaqService faqService, QuestionService questionService, BannerService bannerService,
-                           BreedService breedService, MemberService memberService, LoginService loginService) {
+                           BreedService breedService, MemberService memberService, LoginService loginService, AnswerRepository answerRepository) {
         this.faqService = faqService;
         this.questionService = questionService;
         this.bannerService = bannerService;
@@ -43,6 +44,7 @@ public class AdminController {
         return token;
     }
 
+    // 관리자페이지 faq목록 띄우기
     @GetMapping("/faq")
     public String faqpage(Model model) {
         List<FAQ> faq_list = faqService.getList();
@@ -50,13 +52,43 @@ public class AdminController {
         return "faq_admin";
     }
 
+    // 사용자페이지 faq목록 띄우기
+    @GetMapping("/faqUser")
+    public String faqUserpage(Model model) {
+        List<FAQ> faq_list = faqService.getList();
+        model.addAttribute("faq_list", faq_list);
+        return "faq_user";
+    }
+
+    // 관리자페이지 문의 목록띄우기
     @GetMapping("/question")
     public String questionpage(Model model) {
         List<Question> question_list = questionService.getList();
         model.addAttribute("question_list", question_list);
+        List<Answer> answer_list =  questionService.get_answerList();
+        model.addAttribute("answer_list", answer_list);
         return "question_admin";
     }
 
+    @GetMapping("/questionUser")
+    public String questionUserpage(Model model) {
+        List<Question> questionUser_list = questionService.getList();
+        model.addAttribute("questionUser_list", questionUser_list);
+        List<Answer> answerUser_list =  questionService.get_answerList();
+        model.addAttribute("answerUser_list", answerUser_list);
+        return "question_user";
+    }
+
+    /*@GetMapping("/questionUser")
+    public String questionUserpage(Model model, @RequestParam("memberId") Integer memberId, @RequestParam("qId") Integer qId) {
+        Optional<Question> questionUser_list = questionService.getUserList(memberId);
+        model.addAttribute("questionUser_list", questionUser_list);
+        Optional<Answer> answerUser_list =  questionService.getUser_answerList(qId);
+        model.addAttribute("answerUser_list", answerUser_list);
+        return "question_user";
+    }*/
+
+    // 관리자페이지 배너 목록띄우기
     @GetMapping("/banner")
     public String bannerpage(Model model) {
         List<Banner> banner_list = bannerService.getList();
@@ -149,14 +181,21 @@ public class AdminController {
         return "faq_detail";
     }
 
+    // 사용자페이지 faq상세페이지
+    @RequestMapping(value = {"/faq_detailUser"}, method = {RequestMethod.GET})
+    public String detailUser_faq(@RequestParam(value = "faqId", required = false) Integer faqId,
+                             Model model) {
+        Optional<FAQ> faq_detailList = faqService.detailFAQs(faqId);
+        model.addAttribute("faq_detailList", faq_detailList);
+        return "faq_detailUser";
+    }
+
     // 수정버튼 누를 시 입력되어있는 정보 db에 update
     @ResponseBody
     @RequestMapping(value = {"/update_faq"}, method = {RequestMethod.POST})
     public int update_faq(@RequestBody FAQ faq_updateOp){
         return faqService.updateFAQs(faq_updateOp);
     }
-
-    //등록 미완성 로그인 구현 후 완성
 
     //등록페이지 띄우기
     @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.GET})
@@ -169,5 +208,103 @@ public class AdminController {
     @RequestMapping(value = {"/insert_faq"}, method = {RequestMethod.POST})
     public int insert_faq(@RequestBody FAQ faq_insertOp){
         return faqService.insertFAQs(faq_insertOp);
+    }
+
+    @RequestMapping(value = {"/insert_question"}, method = {RequestMethod.GET})
+    public String insertPage_questionUser() {
+        return "question_insertUser";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/insert_question"}, method = {RequestMethod.POST})
+    public int insert_faq(@RequestBody Question question_insertOp){
+        return questionService.insertQs(question_insertOp);
+    }
+
+    @RequestMapping(value = {"/detailUser_Q"}, method = {RequestMethod.GET})
+    public String detailUser_question(@RequestParam(value = "qId", required = false) Integer qId,
+                                  Model model){
+
+        Optional<Question> questionUser_detailList = questionService.detail_questionQs(qId);
+        Optional<Answer> answerUser_detailList = questionService.detail_answerQs(qId);
+        model.addAttribute("questionUser_detailList", questionUser_detailList);
+        model.addAttribute("answerUser_detailList", answerUser_detailList);
+        /*Optional<Answer> answer_detailList = questionService.detailQs(qId);*/
+        return "question_detailUser";
+    }
+
+    @RequestMapping(value = {"/updateUser_Q"}, method = {RequestMethod.GET})
+    public int updateUser_question(@RequestBody Question question_updateOp){
+
+        return questionService.updateUserQs(question_updateOp);
+    }
+
+    // 삭제버튼 누르면 삭제
+    @ResponseBody
+    @RequestMapping(value = {"/deleteQ"}, method = {RequestMethod.POST})
+    public int delete_Q(@RequestBody List<Integer> qids){
+        return questionService.deleteQs(qids);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/deleteQ_User"}, method = {RequestMethod.POST})
+    public int deleteUser_Q(@RequestBody List<Integer> qids){
+        return questionService.deleteQs(qids);
+    }
+
+    // 문의 관리 수정 및 상세페이지
+    @RequestMapping(value = {"/detailQ"}, method = {RequestMethod.GET})
+    public String detail_question(@RequestParam(value = "qId", required = false) Integer qId,
+                                  Model model){
+
+        Optional<Question> question_detailList = questionService.detail_questionQs(qId);
+        Optional<Answer> answer_detailList = questionService.detail_answerQs(qId);
+        model.addAttribute("question_detailList", question_detailList);
+        model.addAttribute("answer_detailList", answer_detailList);
+        /*Optional<Answer> answer_detailList = questionService.detailQs(qId);*/
+        return "question_detail";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"/update_Q"}, method = {RequestMethod.POST})
+    public int update_question(@RequestBody Question question_updateOp, Answer answer_updateOp){
+        return questionService.updateQs(question_updateOp, answer_updateOp);
+    }
+
+    // 배너 상세페이지
+    @RequestMapping(value = {"/banner_detail"}, method = {RequestMethod.GET})
+    public String detail_banner(@RequestParam(value = "bannerId", required = false) Integer bannerId,
+                                  Model model){
+        Optional<Banner> banner_detailList = bannerService.detailbanners(bannerId);
+        model.addAttribute("banner_detailList", banner_detailList);
+        return "banner_detail";
+    }
+
+    // 배너 등록페이지
+    @RequestMapping(value = {"/insert_banner"}, method = {RequestMethod.GET})
+    public String insertPage_banner() {
+        return "banner_insert";
+    }
+
+    //배너 등록페이지 등록insert하기
+    @ResponseBody
+    @RequestMapping(value = {"/insert_banner"}, method = {RequestMethod.POST})
+    public int insert_banner(@RequestBody Banner banner_insertOp){
+        return bannerService.insertBanners(banner_insertOp);
+    }
+
+
+    // banner 수정update하기
+    @ResponseBody
+    @RequestMapping(value = {"/update_banner"}, method = {RequestMethod.POST})
+    public int update_banner(@RequestBody Banner banner_updateOp){
+        return bannerService.updateBanners(banner_updateOp);
+    }
+
+    // banner 삭제delete하기
+    @ResponseBody
+    @RequestMapping(value = {"/delete_banner"}, method = {RequestMethod.POST})
+    public int delete_banner(@RequestBody List<Integer> bannerids){
+        return bannerService.deleteBanners(bannerids);
     }
 }

@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDateTime;
@@ -47,13 +48,18 @@ public class FaqService {
     @Transactional
     public int updateFAQs(FAQ faq_updateOp){
 
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = currentTime.format(formatter);
+
         FAQ faqToUpdate = faqRepository.findById(faq_updateOp.getFaq_id()).orElse(null);
+        System.out.println(faq_updateOp);
         int resultCode = 0;
         if (faqToUpdate != null) {
             // 엔터티를 찾았다면 UpdateData의 값으로 엔터티를 업데이트합니다.
             faqToUpdate.setMember_id(faq_updateOp.getMember_id());
-            faqToUpdate.setAdd_date(LocalDateTime.now().toString());
-            faqToUpdate.setChange_date(LocalDateTime.now().toString());
+            faqToUpdate.setAdd_date(faq_updateOp.getAdd_date());
+            faqToUpdate.setChange_date(formattedDateTime);
             faqToUpdate.setTitle(faq_updateOp.getTitle());
             faqToUpdate.setContent(faq_updateOp.getContent());
 
@@ -72,8 +78,11 @@ public class FaqService {
     @Transactional
     public int insertFAQs(FAQ faq_insertOp){
 
-        faq_insertOp.setAdd_date(LocalDateTime.now().toString());
-        faq_insertOp.setChange_date(LocalDateTime.now().toString());
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = currentTime.format(formatter);
+
+        faq_insertOp.setAdd_date(formattedDateTime);
 
         FAQ insertedFaq = faqRepository.save(faq_insertOp);
         int resultCode = 0;

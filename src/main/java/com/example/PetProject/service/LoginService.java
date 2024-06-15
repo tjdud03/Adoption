@@ -1,22 +1,16 @@
 package com.example.PetProject.service;
 
-import com.example.PetProject.domain.LoginRequestDto;
 import com.example.PetProject.domain.Member;
 import com.example.PetProject.repository.MemberRepository;
-import com.example.PetProject.security.JwtAuthenticationResponse;
 import com.example.PetProject.security.JwtUtil;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
