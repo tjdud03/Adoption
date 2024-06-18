@@ -19,7 +19,7 @@ public class Question {
     private Integer q_id;
 
     @Column(name = "member_id", nullable = false)
-    private Integer member_id;
+    private Integer memberId;
 
     @Column(name = "content", length = 255)
     private String content;
@@ -31,9 +31,9 @@ public class Question {
     private String change_date;
 
     @Builder
-    public Question(Integer q_id, Integer member_id, String content, String add_date, String change_date ) {
+    public Question(Integer q_id, Integer memberId, String content, String add_date, String change_date ) {
         this.q_id = q_id;
-        this.member_id = member_id;
+        this.memberId = memberId;
         this.content = content;
         this.add_date = add_date;
         this.change_date = change_date;

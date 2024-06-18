@@ -5,6 +5,7 @@ import com.example.PetProject.domain.FAQ;
 import com.example.PetProject.domain.Question;
 import com.example.PetProject.repository.AnswerRepository;
 import com.example.PetProject.repository.QuestionRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,18 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @Transactional
     public List<Question> getList() {
         return questionRepository.findAll();
+    }
+
+    @Transactional
+    public List<Question> getListById() {
+        int member_id = (Integer) httpSession.getAttribute("memberId");
+        return questionRepository.findByMemberId(member_id);
     }
 
     @Transactional
@@ -87,13 +97,12 @@ public class QuestionService {
 
     @Transactional
     public Optional<Answer> detail_answerQs(Integer qId){
-        Optional<Answer> answerOptional = answerRepository.findById(qId);
+        Optional<Answer> answerOptional = answerRepository.findByqId(qId);
         return answerOptional;
     }
 
-    @Transactional
+   /* @Transactional
     public int updateUserQs(Question question_updateOp){
-        System.out.println(1);
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = currentTime.format(formatter);
@@ -104,7 +113,7 @@ public class QuestionService {
 
             // 엔터티를 찾았다면 UpdateData의 값으로 엔터티를 업데이트합니다.
             questionToUpdate.setQ_id(questionToUpdate.getQ_id());
-            questionToUpdate.setMember_id(questionToUpdate.getMember_id());
+            questionToUpdate.setMemberId(questionToUpdate.getMemberId());
             questionToUpdate.setAdd_date(questionToUpdate.getAdd_date());
             questionToUpdate.setChange_date(formattedDateTime);
             questionToUpdate.setContent(questionToUpdate.getContent());
@@ -121,39 +130,35 @@ public class QuestionService {
 
         }
         return resultCode;
-    }
+    }*/
 
     @Transactional
     public int updateQs(Question question_updateOp, Answer answer_updateOp){
-        System.out.println(1);
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = currentTime.format(formatter);
 
         Question questionToUpdate = questionRepository.findById(question_updateOp.getQ_id()).orElse(null);
         Answer answerToUpdate = answerRepository.findById(answer_updateOp.getA_id()).orElse(null);
-        System.out.println(question_updateOp);
-        System.out.println(answer_updateOp);
         int resultCode = 0;
         if (questionToUpdate != null && answerToUpdate != null) {
 
             // 엔터티를 찾았다면 UpdateData의 값으로 엔터티를 업데이트합니다.
             questionToUpdate.setQ_id(questionToUpdate.getQ_id());
-            questionToUpdate.setMember_id(questionToUpdate.getMember_id());
+            questionToUpdate.setMemberId(questionToUpdate.getMemberId());
             questionToUpdate.setAdd_date(questionToUpdate.getAdd_date());
             questionToUpdate.setChange_date(formattedDateTime);
-            questionToUpdate.setContent(questionToUpdate.getContent());
-
+            questionToUpdate.setContent(question_updateOp.getContent());
 
             // FAQ 엔터티를 저장하여 데이터베이스를 업데이트합니다.
             questionRepository.save(questionToUpdate);
 
-            answerToUpdate.setA_id(answer_updateOp.getA_id());
+            answerToUpdate.setA_id(answerToUpdate.getA_id());
             answerToUpdate.setMember_id(answerToUpdate.getMember_id());
             answerToUpdate.setAdd_answerdate(answerToUpdate.getAdd_answerdate());
             answerToUpdate.setChange_date(formattedDateTime);
-            answerToUpdate.setContent(answerToUpdate.getContent());
-            answerToUpdate.setQ_id(answerToUpdate.getQ_id());
+            answerToUpdate.setContent(answer_updateOp.getContent());
+            answerToUpdate.setQId(answerToUpdate.getQId());
             answerRepository.save(answerToUpdate);
             resultCode = 0;
         }else {

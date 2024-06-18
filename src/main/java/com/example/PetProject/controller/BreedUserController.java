@@ -103,6 +103,7 @@ public class BreedUserController {
                 .filter(breed -> breed.getState() == null && "강아지".equals(breed.getType()))
                 .collect(Collectors.toList()); //null값 허용, 수정 허용
         model.addAttribute("breed_list", breedList);
+        System.out.println(breedList);
         return "breed_user";
     }
     @GetMapping("/breed_user_cat")

@@ -31,15 +31,15 @@ public class Answer {
     private String change_date;
 
     @Column(name = "q_id", length = 255)
-    private Integer q_id;
+    private Integer qId;
 
     @Builder
-    public Answer(Integer a_id, Integer member_id, String content, String add_answerdate, String change_date, Integer q_id) {
+    public Answer(Integer a_id, Integer member_id, String content, String add_answerdate, String change_date, Integer qId) {
         this.a_id = a_id;
         this.member_id = member_id;
         this.content = content;
         this.add_answerdate = add_answerdate;
         this.change_date = change_date;
-        this.q_id = q_id;
+        this.qId = qId;
     }
 }

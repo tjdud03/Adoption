@@ -78,7 +78,7 @@
             "input_pw" : input_pw
         }
 
-            $.ajax({
+        $.ajax({
             type: "POST",
             url: "/login",
             contentType:"application/json",
@@ -88,7 +88,20 @@
                 if(res.accessToken != null){
                     localStorage.setItem('memberId', res.sessionData.memberId);
                     localStorage.setItem('memType', res.sessionData.memType);
-                    location.href = '/member';
+                    if(localStorage.getItem('memType') === "admin"){
+                        let prompt_where = prompt("관리자페이지면 admin, 사용자페이지면 user를 입력하세요");
+                        let where = String(prompt_where);
+                        if(where == "admin"){
+                            location.href = '/member';
+                        } else if(where == "user"){
+                            location.href = '/breed_user';
+                        } else{
+                            alert("잘못 입력하셨습니다.");
+                        }
+                    }else if(localStorage.getItem('memType') === "user"){
+                        location.href='/breed_user';
+                    }
+
                 }
             },
             error: function(xhr, status, error) {
